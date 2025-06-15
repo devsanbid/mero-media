@@ -6,8 +6,11 @@ import { FaGoogle, FaApple } from "react-icons/fa";
 import { IoLogoGithub } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom"
 
 export default function LoginPage() {
+
+  const navigation = useNavigate()
 
   const { register, handleSubmit, formState: { errors }, reset } = useForm({
     defaultValues: {
@@ -21,10 +24,21 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = async (data) => {
+    console.log("running.....")
     setIsSubmitting(true);
     try {
-      localStorage.setItem("auth", JSON.stringify(data));
-      console.log('Login data:', data);
+      const userData = JSON.parse(localStorage.getItem("registrationData"))
+      if (data.email === userData.email && data.password === userData.password) {
+        alert("sucessfully login")
+        navigation("/dashboard")
+      } else if (!(data.email === userData.email)) {
+        alert("email is not invalid")
+      } else if (!(data.password === userData.password)) {
+        alert("password is not valid")
+      }
+      else {
+        alert("both are wrong. failed to login!!")
+      }
     } catch (error) {
       console.error('Login error:', error);
     } finally {

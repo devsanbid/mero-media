@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 export default function SignupForm() {
+
   const { register, handleSubmit, formState: { errors }, watch, reset, trigger } = useForm({
     defaultValues: {
       username: '',
@@ -56,7 +57,7 @@ export default function SignupForm() {
 
   const nextStep = async () => {
     let fieldsToValidate = [];
-    
+
     if (step === 1) {
       fieldsToValidate = ['username', 'fullName'];
     } else if (step === 2) {
@@ -64,7 +65,7 @@ export default function SignupForm() {
     } else if (step === 3) {
       fieldsToValidate = ['password', 'confirmPassword'];
     }
-    
+
     const isValid = await trigger(fieldsToValidate);
     if (isValid) {
       setStep(step + 1);
@@ -78,8 +79,8 @@ export default function SignupForm() {
   const onSubmit = async (data) => {
     setIsSubmitting(true);
     try {
-      console.log('Registration data:', data);
       localStorage.setItem('registrationData', JSON.stringify(data));
+      
     } catch (error) {
       console.error('Registration error:', error);
     } finally {
