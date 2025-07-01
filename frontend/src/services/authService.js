@@ -1,103 +1,57 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+import axios from "axios"; 
+
+const API_BASE_URL = "http://localhost:5000/api";
 
 class AuthService {
   async register(userData) {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Registration failed');
-      }
-
-      if (data.success && data.data.token) {
-        localStorage.setItem('token', data.data.token);
-        localStorage.setItem('user', JSON.stringify(data.data.user));
-      }
-
-      return data;
+      const response = await axios.post(`${API_BASE_URL}/auth/register`, userData);
+      return response.data;
     } catch (error) {
-      throw new Error(error.message || 'Network error occurred');
+      throw new Error("Registration failed: ", error);
     }
   }
 
   async login(credentials) {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
-      }
-
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, credentials);
+      const data = response.data;
+      
       if (data.success && data.data.token) {
-        localStorage.setItem('token', data.data.token);
-        localStorage.setItem('user', JSON.stringify(data.data.user));
+        localStorage.setItem("token", data.data.token);
       }
-
       return data;
     } catch (error) {
-      throw new Error(error.message || 'Network error occurred');
+      throw new Error("Login failed: ", error);
     }
   }
 
   async getProfile() {
     try {
-      const token = localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (!token) {
-        throw new Error('No token found');
+        throw new Error("No token found");
       }
 
-      const response = await fetch(`${API_BASE_URL}/auth/profile`, {
-        method: 'GET',
+      const response = await axios.get(`${API_BASE_URL}/auth/profile`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to get profile');
-      }
-
-      return data;
+      return response.data;
     } catch (error) {
-      throw new Error(error.message || 'Network error occurred');
+      throw new Error(error.response?.data?.message || error.message || "Failed to get profile");
     }
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem("token");
   }
 
   isAuthenticated() {
-    return !!localStorage.getItem('token');
-  }
-
-  getToken() {
-    return localStorage.getItem('token');
-  }
-
-  getUser() {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    return !!localStorage.getItem("token");
   }
 }
 
