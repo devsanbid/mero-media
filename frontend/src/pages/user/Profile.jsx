@@ -1,4 +1,3 @@
-'use client';
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -6,8 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { FiHome, FiUser, FiList, FiAlertCircle, FiUserPlus } from 'react-icons/fi';
 import { AiOutlineFileText } from 'react-icons/ai';
-import AuthRedirect from '../components/AuthRedirect';
-import Loading from '../components/Loading';
+import AuthRedirect from '../../components/AuthRedirect';
+import Loading from '../../components/Loading';
+import { getAllPosts } from '../../redux/posts/postsSlice';
+import PostList from '../../components/feed/posts/PostList';
+import PostForm from '../../components/feed/posts/PostForm';
+import RunningServer from '../../components/RunningServer';
 
 // Import placeholder components (these would need to be created)
 // import ProfileInfo from '../components/userProfile/ProfileInfo';
@@ -52,15 +55,13 @@ const Following = ({ users, user }) => (
 const Posts = ({ userPosts, loggedInUserId, user, usersList }) => (
   <div className="p-6">
     <h3 className="text-xl font-bold mb-4">Posts</h3>
-    {userPosts && userPosts.length > 0 ? (
-      <div className="space-y-4">
-        {userPosts.map((post) => (
-          <div key={post._id} className="border rounded-lg p-4">
-            <p>{post.content}</p>
-            <small className="text-gray-500">{new Date(post.createdAt).toLocaleDateString()}</small>
-          </div>
-        ))}
+    {loggedInUserId === user._id && (
+      <div className="mb-6">
+        <PostForm />
       </div>
+    )}
+    {userPosts && userPosts.length > 0 ? (
+      <PostList posts={userPosts} />
     ) : (
       <p className="text-gray-600">No posts yet.</p>
     )}
@@ -72,6 +73,7 @@ const UserProfile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isServerRunning, setIsServerRunning] = useState(false);
   const [activeSection, setActiveSection] = useState('Profile');
   const dispatch = useDispatch();
   
@@ -83,12 +85,42 @@ const UserProfile = () => {
   const friendsList = useSelector((state) => state.friendRequests?.friendsList || []);
   const loggedInUserId = useSelector((state) => state.auth.user?._id);
   
-  const userPosts = posts.filter((post) => post.user?._id === user?._id);
+  // Filter posts based on whether viewing own profile or another user's profile
+  const userPosts = posts.filter((post) => {
+    // If no profileId (viewing /user/me), only show logged-in user's posts
+    if (!profileId) {
+      return post.user?._id === loggedInUserId;
+    }
+    // If viewing another user's profile, show that user's posts
+    return post.user?._id === user?._id;
+  });
+
+  // Get current user from Redux
+  const currentUser = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    const checkServer = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_API.replace('/api', '')}/`);
+        if (response.data === "Server is running!") {
+          setIsServerRunning(true);
+        }
+      } catch (error) {
+        setIsServerRunning(false);
+      }
+    };
+    checkServer();
+  }, []);
+
+  useEffect(() => {
+    if(isServerRunning){
+      dispatch(getAllPosts());
+    }
+  }, [dispatch, isServerRunning]);
 
   useEffect(() => {
     // If no profileId, show current user's profile
     if (!profileId) {
-      const currentUser = useSelector((state) => state.auth.user);
       if (currentUser) {
         setUser(currentUser);
         setLoading(false);
@@ -98,7 +130,7 @@ const UserProfile = () => {
     
     const fetchUserDetails = async () => {
       try {
-        const response = await axios.get(`/api/user/userDetails/${profileId}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_API}/user/userDetails/${profileId}`);
         setUser(response.data.data);
         setLoading(false);
       } catch (err) {
@@ -108,21 +140,28 @@ const UserProfile = () => {
     };
     
     fetchUserDetails();
-  }, [profileId, dispatch]);
+  }, [profileId, currentUser]);
 
-  // If no profileId and no user from auth, show current user from Redux
-  const currentUser = useSelector((state) => state.auth.user);
-  if (!profileId && !user && currentUser) {
-    setUser(currentUser);
-    setLoading(false);
+
+
+  if (!isServerRunning) {
+    return <RunningServer />;
   }
 
   if (loading) {
-    return <Loading />;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-500"></div>
+      </div>
+    );
   }
 
   if (error) {
-    return <p className="text-red-500">{error}</p>;
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-red-500 text-xl">{error}</div>
+      </div>
+    );
   }
 
   if (!user) {
@@ -210,10 +249,10 @@ const UserProfile = () => {
             />
             {loggedInUserId === user._id && (
               <div className="absolute bottom-4 right-4 flex space-x-2">
-                <Link to="/settings" className="px-2 sm:px-4 py-1 sm:py-2 bg-slate-700 text-white rounded-md hover:bg-slate-800 transition duration-300">
+                <Link to="/user/settings" className="px-2 sm:px-4 py-1 sm:py-2 bg-slate-700 text-white rounded-md hover:bg-slate-800 transition duration-300">
                   Edit Cover Image
                 </Link>
-                <Link to="/settings" className="px-2 sm:px-4 py-1 sm:py-2 bg-slate-700 text-white rounded-md hover:bg-slate-800 transition duration-300">
+                <Link to="/user/settings" className="px-2 sm:px-4 py-1 sm:py-2 bg-slate-700 text-white rounded-md hover:bg-slate-800 transition duration-300">
                   Edit Profile Picture
                 </Link>
               </div>

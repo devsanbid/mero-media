@@ -1,11 +1,10 @@
-"use client";
 import React, { useEffect, useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchFriendsList,
-  unfriend,
-} from '../redux/friendRequests/friendRequestsSlice';
-import AuthRedirect from '../components/AuthRedirect';
+} from '../../redux/friendRequests/friendRequestsSlice';
+import FriendRequestButton from '../../components/user/FriendRequestButton';
+import AuthRedirect from '../../components/AuthRedirect';
 import { 
   FiUserMinus, 
   FiEye, 
@@ -36,20 +35,18 @@ const FriendsList = () => {
   const searchInputRef = useRef(null);
 
   useEffect(() => {
-    // dispatch(fetchFriendsList());
+    dispatch(fetchFriendsList());
   }, [dispatch]);
 
-  // Handle Unfriend Action
-  const handleUnfriend = (friendId) => {
-    // dispatch(unfriend(friendId));
-    console.log('Unfriend:', friendId);
+  const handleFriendshipChange = () => {
+    dispatch(fetchFriendsList());
   };
 
   const refreshData = () => {
     setIsRefreshing(true);
-    // dispatch(fetchFriendsList()).finally(() => {
+    dispatch(fetchFriendsList()).finally(() => {
       setTimeout(() => setIsRefreshing(false), 800);
-    // });
+    });
   };
 
   // Filter friends by search term
@@ -140,14 +137,11 @@ const FriendsList = () => {
               </Link>
             </div>
             
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="w-full py-2 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center shadow-sm hover:shadow"
-              onClick={() => handleUnfriend(friend._id)}
-            >
-              <FiUserMinus className="mr-2" /> Unfriend
-            </motion.button>
+            <FriendRequestButton 
+              userId={friend._id} 
+              onFriendshipChange={handleFriendshipChange}
+              className="w-full"
+            />
           </div>
         </div>
         
@@ -240,15 +234,10 @@ const FriendsList = () => {
             </motion.button>
           </Link>
 
-          <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 400 }}
-            className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center"
-            onClick={() => handleUnfriend(friend._id)}
-          >
-            <FiUserMinus className="mr-1.5" size={14} /> Unfriend
-          </motion.button>
+          <FriendRequestButton 
+            userId={friend._id} 
+            onFriendshipChange={handleFriendshipChange}
+          />
         </div>
       </motion.div>
     );
@@ -399,7 +388,7 @@ const FriendsList = () => {
               <p className="text-gray-600 mb-6">
                 You haven't connected with anyone yet. Start adding friends to grow your network!
               </p>
-              <Link to="/people" className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center mx-auto w-max">
+              <Link to="/user/people" className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center mx-auto w-max">
                 <FiUsers className="mr-2" /> Find People
               </Link>
             </motion.div>
@@ -503,17 +492,13 @@ const FriendsList = () => {
                       </Link>
                     </motion.div>
                     
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors flex items-center shadow-md"
-                      onClick={() => {
-                        handleUnfriend(selectedUser._id);
+                    <FriendRequestButton 
+                      userId={selectedUser._id} 
+                      onFriendshipChange={() => {
+                        handleFriendshipChange();
                         setSelectedUser(null);
                       }}
-                    >
-                      <FiUserMinus className="mr-2" /> Unfriend
-                    </motion.button>
+                    />
                   </div>
                 </div>
               </motion.div>
