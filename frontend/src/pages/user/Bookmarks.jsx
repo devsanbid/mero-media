@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PostList from "../components/feed/posts/PostList";
-import { fetchSavedItems } from "../redux/savedItems/savedItemsSlice";
-import AuthRedirect from '../components/AuthRedirect';
+import PostList from "../../components/feed/posts/PostList";
+import { fetchSavedItems } from "../../redux/savedItems/savedItemsSlice";
+import AuthRedirect from '../../components/AuthRedirect';
 import { BsBookmark, BsBookmarkFill, BsArrowUpCircle } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,7 +12,7 @@ const Bookmarks = () => {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
-    // dispatch(fetchSavedItems());
+    dispatch(fetchSavedItems());
 
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 300);
@@ -34,7 +34,7 @@ const Bookmarks = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-gradient-to-br from-white to-blue-50 mx-auto p-6 space-y-6 w-full rounded-lg shadow-sm"
+        className="bg-gradient-to-br from-white to-blue-50 mx-auto space-y-6 w-full rounded-lg shadow-sm"
         style={{ minHeight: "calc(100vh - 3.5rem)" }}
       >
         <motion.div
