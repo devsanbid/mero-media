@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 import { setLoggedIn } from "../../redux/auth/authSlice";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/");
+      navigate("/user/home");
     }
     
     const interval = setInterval(() => {
@@ -69,8 +69,8 @@ export default function LoginPage() {
 
     setIsSubmitting(true);
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_API}/api/user/login`,
+      const response = await axiosInstance.post(
+        '/user/login',
         {
           email: formData.email,
           password: formData.password,
@@ -81,7 +81,7 @@ export default function LoginPage() {
 
       dispatch(setLoggedIn(true, response.data.data.token));
 
-      navigate("/");
+      navigate("/user/home");
     } catch (error) {
       console.error("Login failed:", error.response?.data?.message);
       setErrors({ general: error.response?.data?.message || "Invalid credentials" });

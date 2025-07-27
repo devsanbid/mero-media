@@ -1,13 +1,13 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setLoggedIn } from '../../redux/auth/authSlice';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaGoogle, FaFacebookF, FaTwitter, FaApple } from 'react-icons/fa';
 import { HiOutlineLightBulb, HiOutlineSparkles, HiOutlineHeart, HiEye, HiEyeOff } from 'react-icons/hi';
-import UnAuthRedirect from '../components/UnAuthRedirect';
+import UnAuthRedirect from '../../components/UnAuthRedirect';
 
 const RegisterPage = () => {
   const [step, setStep] = useState(1);
@@ -27,6 +27,14 @@ const RegisterPage = () => {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/user/home');
+    }
+  }, [isLoggedIn, navigate]);
 
   const calculatePasswordStrength = (password) => {
     let strength = 0;
@@ -116,22 +124,15 @@ const RegisterPage = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await axios.post('/api/auth/register', {
+      const response = await axiosInstance.post('/user/register', {
         username: formData.username,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        fullName: `${formData.firstName} ${formData.lastName}`,
         email: formData.email,
         password: formData.password
       });
 
       if (response.data.success) {
-        localStorage.setItem('auth-token', response.data.token);
-        dispatch(setLoggedIn({
-          isLoggedIn: true,
-          user: response.data.user
-        }));
-        
-        navigate('/');
+        navigate('/login');
       }
     } catch (error) {
       console.error('Registration error:', error);
