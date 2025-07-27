@@ -6,11 +6,11 @@ const Navigation = () => {
   const { user } = useSelector((state) => state.auth);
 
   const navItems = [
-    { path: '/', label: 'Home', icon: '🏠' },
-    { path: '/explore', label: 'Explore', icon: '🔍' },
-    { path: '/friends', label: 'Friends', icon: '👥' },
-    { path: '/posts', label: 'Posts', icon: '📝' },
-    { path: '/user', label: 'User Dashboard', icon: '👤' },
+    { path: '/user/home', label: 'Home', icon: '🏠' },
+    { path: '/user/explore', label: 'Explore', icon: '🔍' },
+    { path: '/user/friends', label: 'Friends', icon: '👥' },
+    { path: '/user/posts', label: 'Posts', icon: '📝' },
+    { path: '/user/user-profile', label: 'User Dashboard', icon: '👤' },
   ];
 
   if (user?.role === 'admin') {
