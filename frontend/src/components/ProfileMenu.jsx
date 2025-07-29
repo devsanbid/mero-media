@@ -36,7 +36,7 @@ const ProfileMenu = () => {
     {
       icon: <FiUser className="w-4 h-4" />,
       label: 'My Profile',
-      href: user?._id ? `/user/profile/${user._id}` : '/user/me',
+      href: user?.id ? `/user/profile/${user.id}` : '/user/me',
       description: 'View and edit your profile'
     },
     {

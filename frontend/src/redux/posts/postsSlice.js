@@ -167,12 +167,12 @@ const postsSlice = createSlice({
         state.status = 'succeeded';
       })
       .addCase(getPostById.fulfilled, (state, action) => {
-        const existingPost = state.posts.find(post => post._id === action.payload.data._id);
+        const existingPost = state.posts.find(post => post.id === action.payload.data.id);
         if (!existingPost) {
           state.posts.push(action.payload.data);
         } else {
           // Update existing post with fresh data
-          const index = state.posts.findIndex(post => post._id === action.payload.data._id);
+          const index = state.posts.findIndex(post => post.id === action.payload.data.id);
           state.posts[index] = action.payload.data;
         }
       })
@@ -186,28 +186,28 @@ const postsSlice = createSlice({
         state.posts.unshift(action.payload.data); // Prepend the new post to the array
       })
       .addCase(editPost.fulfilled, (state, action) => {
-        const index = state.posts.findIndex((post) => post._id === action.payload.data._id);
+        const index = state.posts.findIndex((post) => post.id === action.payload.data.id);
         if (index !== -1) {
           state.posts[index] = action.payload.data;
         }
       })
       .addCase(deletePost.fulfilled, (state, action) => {
-        state.posts = state.posts.filter((post) => post._id !== action.meta.arg);
+        state.posts = state.posts.filter((post) => post.id !== action.meta.arg);
       })
       .addCase(toggleLikePost.fulfilled, (state, action) => {
-        const index = state.posts.findIndex((post) => post._id === action.payload.data._id);
+        const index = state.posts.findIndex((post) => post.id === action.payload.data.id);
         if (index !== -1) {
           state.posts[index] = action.payload.data;
         }
       })
       .addCase(getPostLikers.fulfilled, (state, action) => {
-        const post = state.posts.find((post) => post._id === action.meta.arg);
+        const post = state.posts.find((post) => post.id === action.meta.arg);
         if (post) {
           post.likers = action.payload.data;
         }
       })
       .addCase(votePollOption.fulfilled, (state, action) => {
-        const index = state.posts.findIndex((post) => post._id === action.payload.data._id);
+        const index = state.posts.findIndex((post) => post.id === action.payload.data.id);
         if (index !== -1) {
           state.posts[index] = action.payload.data;
         }

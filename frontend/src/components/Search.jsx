@@ -79,8 +79,8 @@ const Search = () => {
           >
             {filteredUsers.map((user) => (
               <Link
-                key={user._id}
-                to={`/user/profile/${user._id}`}
+                key={user.id}
+                to={`/user/profile/${user.id}`}
                 onClick={() => {
                   setSearchTerm('');
                   setIsOpen(false);

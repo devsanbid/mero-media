@@ -21,27 +21,27 @@ const FriendRequestButton = ({ targetUserId, targetUser }) => {
   const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
-    if (!targetUserId || targetUserId === userDetails?._id) {
+    if (!targetUserId || targetUserId === userDetails?.id) {
       setRelationshipStatus('self');
       return;
     }
 
     // Check if already friends
-    const isFriend = friends.some(friend => friend._id === targetUserId);
+    const isFriend = friends.some(friend => friend.id === targetUserId);
     if (isFriend) {
       setRelationshipStatus('friends');
       return;
     }
 
     // Check if request was sent
-    const sentRequest = sentRequests.find(req => req.to._id === targetUserId);
+    const sentRequest = sentRequests.find(req => req.to.id === targetUserId);
     if (sentRequest) {
       setRelationshipStatus('sent');
       return;
     }
 
     // Check if request was received
-    const receivedRequest = receivedRequests.find(req => req.from._id === targetUserId);
+    const receivedRequest = receivedRequests.find(req => req.from.id === targetUserId);
     if (receivedRequest) {
       setRelationshipStatus('received');
       return;
@@ -66,9 +66,9 @@ const FriendRequestButton = ({ targetUserId, targetUser }) => {
     if (isProcessing) return;
     setIsProcessing(true);
     try {
-      const receivedRequest = receivedRequests.find(req => req.from._id === targetUserId);
+      const receivedRequest = receivedRequests.find(req => req.from.id === targetUserId);
       if (receivedRequest) {
-        await dispatch(acceptFriendRequest(receivedRequest._id));
+        await dispatch(acceptFriendRequest(receivedRequest.id));
       }
     } catch (error) {
       console.error('Error accepting friend request:', error);
@@ -81,9 +81,9 @@ const FriendRequestButton = ({ targetUserId, targetUser }) => {
     if (isProcessing) return;
     setIsProcessing(true);
     try {
-      const receivedRequest = receivedRequests.find(req => req.from._id === targetUserId);
+      const receivedRequest = receivedRequests.find(req => req.from.id === targetUserId);
       if (receivedRequest) {
-        await dispatch(rejectFriendRequest(receivedRequest._id));
+        await dispatch(rejectFriendRequest(receivedRequest.id));
       }
     } catch (error) {
       console.error('Error rejecting friend request:', error);
@@ -96,9 +96,9 @@ const FriendRequestButton = ({ targetUserId, targetUser }) => {
     if (isProcessing) return;
     setIsProcessing(true);
     try {
-      const sentRequest = sentRequests.find(req => req.to._id === targetUserId);
+      const sentRequest = sentRequests.find(req => req.to.id === targetUserId);
       if (sentRequest) {
-        await dispatch(cancelSentRequest(sentRequest._id));
+        await dispatch(cancelSentRequest(sentRequest.id));
       }
     } catch (error) {
       console.error('Error canceling friend request:', error);

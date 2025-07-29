@@ -100,7 +100,7 @@ const FriendsList = () => {
 
           {/* Profile picture with animation */}
           <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-            <Link to={`/profile/${friend._id}`}>
+            <Link to={`/profile/${friend.id}`}>
               <motion.div
                 whileHover={{ scale: 1.08, y: -5 }}
                 className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:border-blue-100 transition-all duration-300"
@@ -117,7 +117,7 @@ const FriendsList = () => {
 
         <div className="pt-14 pb-5 px-5">
           <div className="text-center mb-4">
-            <Link to={`/profile/${friend._id}`} className="group">
+            <Link to={`/profile/${friend.id}`} className="group">
               <h3 className="font-bold text-gray-800 text-lg capitalize group-hover:text-blue-600 transition-colors duration-300">{friend.fullName || 'Unknown User'}</h3>
             </Link>
             <p className="text-sm text-blue-500 font-medium">@{friend.username || 'username'}</p>
@@ -129,7 +129,7 @@ const FriendsList = () => {
           <div className="flex flex-col gap-2.5">
             <div className="flex gap-2">
               <Link
-                to={`/profile/${friend._id}`}
+                to={`/profile/${friend.id}`}
                 className="flex-1 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center justify-center group"
               >
                 <FiEye className="mr-2 group-hover:scale-110 transition-transform duration-300" /> 
@@ -138,7 +138,7 @@ const FriendsList = () => {
             </div>
             
             <FriendRequestButton 
-              userId={friend._id} 
+              userId={friend.id} 
               onFriendshipChange={handleFriendshipChange}
               className="w-full"
             />
@@ -172,7 +172,7 @@ const FriendsList = () => {
       >
         <div className="flex items-center space-x-4">
           <div className="relative group">
-            <Link to={`/profile/${friend._id}`}>
+            <Link to={`/profile/${friend.id}`}>
               <motion.div
                 whileHover={{ scale: 1.12 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -189,7 +189,7 @@ const FriendsList = () => {
           </div>
 
           <div className="flex flex-col">
-            <Link to={`/profile/${friend._id}`} className="group">
+            <Link to={`/profile/${friend.id}`} className="group">
               <h3 className="font-bold text-gray-800 group-hover:text-blue-600 transition-colors text-lg">
                 {friend.fullName || 'Unknown User'}
               </h3>
@@ -222,7 +222,7 @@ const FriendsList = () => {
             <FiEye size={18} />
           </motion.button>
 
-          <Link to={`/messages/${friend._id}`}>
+          <Link to={`/messages/${friend.id}`}>
             <motion.button
               whileHover={{ scale: 1.15, y: -2 }}
               whileTap={{ scale: 0.9 }}
@@ -235,7 +235,7 @@ const FriendsList = () => {
           </Link>
 
           <FriendRequestButton 
-            userId={friend._id} 
+            userId={friend.id} 
             onFriendshipChange={handleFriendshipChange}
           />
         </div>
@@ -397,7 +397,7 @@ const FriendsList = () => {
               <AnimatePresence>
                 {filteredFriends.map(friend => (
                   <motion.div
-                    key={friend._id}
+                    key={friend.id}
                     layout
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -485,7 +485,7 @@ const FriendsList = () => {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link
-                        to={`/profile/${selectedUser._id}`}
+                        to={`/profile/${selectedUser.id}`}
                         className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center shadow-md"
                       >
                         <FiEye className="mr-2" /> View Profile
@@ -493,7 +493,7 @@ const FriendsList = () => {
                     </motion.div>
                     
                     <FriendRequestButton 
-                      userId={selectedUser._id} 
+                      userId={selectedUser.id} 
                       onFriendshipChange={() => {
                         handleFriendshipChange();
                         setSelectedUser(null);

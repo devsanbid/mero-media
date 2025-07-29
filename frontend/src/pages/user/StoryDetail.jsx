@@ -43,7 +43,7 @@ const StoryDetail = () => {
 
   // Group stories by user
   const groupedStories = stories.reduce((acc, story) => {
-    const userId = story.user._id;
+    const userId = story.user.id;
     if (!acc[userId]) {
       acc[userId] = {
         user: story.user,
@@ -58,7 +58,7 @@ const StoryDetail = () => {
 
   useEffect(() => {
     if (stories.length > 0 && storyId) {
-      const foundStory = stories.find((story) => story._id === storyId);
+      const foundStory = stories.find((story) => story.id === storyId);
       setStoryToShow(foundStory || null);
     }
   }, [stories, storyId]);
@@ -73,7 +73,7 @@ const StoryDetail = () => {
   useEffect(() => {
     let timer;
     if (storyToShow && isPlaying) {
-      const userStories = groupedStories[storyToShow.user._id].stories;
+      const userStories = groupedStories[storyToShow.user.id].stories;
       const nextStoryIndex = (currentStoryIndex + 1) % userStories.length;
 
       // Reset progress and start interval
@@ -121,7 +121,7 @@ const StoryDetail = () => {
   // Move to the next story manually
   const handleNextStory = () => {
     if (storyToShow && storyToShow.user) {
-      const userStories = groupedStories[storyToShow.user._id]?.stories || [];
+      const userStories = groupedStories[storyToShow.user.id]?.stories || [];
       const nextStoryIndex = (currentStoryIndex + 1) % userStories.length;
       setStoryToShow(userStories[nextStoryIndex]);
       setCurrentStoryIndex(nextStoryIndex);
@@ -137,7 +137,7 @@ const StoryDetail = () => {
 
   // Click on progress bar to go to a specific story
   const handleProgressClick = (storyIndex) => {
-    const userStories = groupedStories[storyToShow.user._id].stories;
+    const userStories = groupedStories[storyToShow.user.id].stories;
     setStoryToShow(userStories[storyIndex]);
     setCurrentStoryIndex(storyIndex);
     setProgress(0);
@@ -147,7 +147,7 @@ const StoryDetail = () => {
 
   // Navigate to next/previous user's story
   const handleNextUser = () => {
-    const currentUserIndex = users.findIndex((userGroup) => userGroup.user._id === storyToShow.user._id);
+    const currentUserIndex = users.findIndex((userGroup) => userGroup.user.id === storyToShow.user.id);
     if (currentUserIndex < users.length - 1) {
       setStoryToShow(users[currentUserIndex + 1].stories[0]);
       setCurrentStoryIndex(0);
@@ -155,7 +155,7 @@ const StoryDetail = () => {
   };
 
   const handlePrevUser = () => {
-    const currentUserIndex = users.findIndex((userGroup) => userGroup.user._id === storyToShow.user._id);
+    const currentUserIndex = users.findIndex((userGroup) => userGroup.user.id === storyToShow.user.id);
     if (currentUserIndex > 0) {
       setStoryToShow(users[currentUserIndex - 1].stories[0]);
       setCurrentStoryIndex(0);
@@ -241,7 +241,7 @@ const StoryDetail = () => {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ delay: index * 0.05 }}
                 >
-                  <Link to={`/story/${userGroup.stories[0]._id}`}>
+                  <Link to={`/story/${userGroup.stories[0].id}`}>
                     <motion.div 
                       whileHover={{ scale: 1.03, x: 5 }}
                       className="flex items-center justify-between bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border-l-4 border-indigo-500"
@@ -306,7 +306,7 @@ const StoryDetail = () => {
               transition={{ delay: 0.2 }}
               className="relative z-10 w-full"
             >
-              <Link to={storyToShow?.user?._id ? `/profile/${storyToShow.user._id}` : '/user/me'} className="flex items-center bg-white/90 backdrop-blur-md py-3 px-4 rounded-xl shadow-lg mx-auto max-w-md">
+              <Link to={storyToShow?.user?.id ? `/profile/${storyToShow.user.id}` : '/user/me'} className="flex items-center bg-white/90 backdrop-blur-md py-3 px-4 rounded-xl shadow-lg mx-auto max-w-md">
                 <motion.img 
                   whileHover={{ scale: 1.1 }}
                   src={storyToShow?.user.profilePicture} 
@@ -336,12 +336,12 @@ const StoryDetail = () => {
 
             {/* Progress bar */}
             <div className="w-full h-1 relative flex space-x-1 z-10 mt-4">
-              {groupedStories[storyToShow.user._id].stories.map((story, index) => (
+              {groupedStories[storyToShow.user.id].stories.map((story, index) => (
                 <motion.div 
-                  key={story._id} 
+                  key={story.id} 
                   className="relative h-full rounded-full overflow-hidden transition-all duration-300 cursor-pointer"
                   style={{
-                    width: `${100 / groupedStories[storyToShow.user._id].stories.length}%`,
+                    width: `${100 / groupedStories[storyToShow.user.id].stories.length}%`,
                     backgroundColor: "rgba(255, 255, 255, 0.3)",
                   }}
                   onClick={() => handleProgressClick(index)}
@@ -369,7 +369,7 @@ const StoryDetail = () => {
             </motion.div>
 
             {/* Navigation Buttons */}
-            {users.findIndex((userGroup) => userGroup.user._id === storyToShow.user._id) > 0 && (
+            {users.findIndex((userGroup) => userGroup.user.id === storyToShow.user.id) > 0 && (
               <motion.button 
                 whileHover={{ scale: 1.1, x: -5 }}
                 whileTap={{ scale: 0.9 }}
@@ -379,7 +379,7 @@ const StoryDetail = () => {
                 <MdChevronLeft className="text-indigo-600 hover:text-white w-8 h-8" />
               </motion.button>
             )}
-            {users.findIndex((userGroup) => userGroup.user._id === storyToShow.user._id) < users.length - 1 && (
+            {users.findIndex((userGroup) => userGroup.user.id === storyToShow.user.id) < users.length - 1 && (
               <motion.button 
                 whileHover={{ scale: 1.1, x: 5 }}
                 whileTap={{ scale: 0.9 }}

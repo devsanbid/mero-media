@@ -48,10 +48,10 @@ const LikersModal = ({ likers, closeModal }) => {
               <div className="p-2">
                 {likers.map((liker) => (
                   <motion.div
-                    key={liker._id}
+                    key={liker.id}
                     whileHover={{ backgroundColor: '#f9fafb' }}
                     className="flex items-center p-3 rounded-lg cursor-pointer transition-colors"
-                    onClick={() => handleProfileClick(liker._id)}
+                    onClick={() => handleProfileClick(liker.id)}
                   >
                     <div className="relative">
                       <img

@@ -108,14 +108,14 @@ const commentsSlice = createSlice({
       })
       .addCase(editComment.fulfilled, (state, action) => {
         const { postId, comment } = action.payload;
-        const index = state.commentsByPostId[postId]?.findIndex((c) => c._id === comment._id);
+        const index = state.commentsByPostId[postId]?.findIndex((c) => c.id === comment.id);
         if (index !== -1) {
           state.commentsByPostId[postId][index] = comment; // Update the comment in the state
         }
       })
       .addCase(toggleLikeComment.fulfilled, (state, action) => {
         const { postId, comment } = action.payload;
-        const index = state.commentsByPostId[postId]?.findIndex((c) => c._id === comment._id);
+        const index = state.commentsByPostId[postId]?.findIndex((c) => c.id === comment.id);
         if (index !== -1) {
           state.commentsByPostId[postId][index] = comment; // Update the liked/unliked comment in the state
         }
@@ -123,7 +123,7 @@ const commentsSlice = createSlice({
       .addCase(deleteComment.fulfilled, (state, action) => {
         const { postId, commentId } = action.payload;
         state.commentsByPostId[postId] = state.commentsByPostId[postId]?.filter(
-          (comment) => comment._id !== commentId
+          (comment) => comment.id !== commentId
         );
       });      
   },

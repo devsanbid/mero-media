@@ -143,7 +143,7 @@ const Rightbar = () => {
                         className="bg-white rounded-lg overflow-hidden w-full"
                       >
                         <Link
-                          to={user?._id ? `/user/profile/${user._id}` : '/user/me'}
+                          to={user?.id ? `/user/profile/${user.id}` : '/user/me'}
                           className="flex items-center p-2 transition cursor-pointer group"
                         >
                           <div className="relative">

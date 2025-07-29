@@ -40,9 +40,9 @@ const Stories = () => {
   // Iterate through stories to filter out duplicate users
   if (stories && stories.length > 0) {
     stories.forEach((story) => {
-      if (!seenUserIds.has(story.user._id)) {
+      if (!seenUserIds.has(story.user.id)) {
         uniqueUserStories.push(story);
-        seenUserIds.add(story.user._id);
+        seenUserIds.add(story.user.id);
       }
     });
   }
@@ -116,7 +116,7 @@ const Stories = () => {
           <AnimatePresence>
             {uniqueUserStories.map((story) => (
               <motion.div
-                key={story._id}
+                key={story.id}
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -126,16 +126,16 @@ const Stories = () => {
                   y: -5,
                   transition: { type: "spring", stiffness: 300 }
                 }}
-                onHoverStart={() => setHoveredStory(story._id)}
+                onHoverStart={() => setHoveredStory(story.id)}
                 onHoverEnd={() => setHoveredStory(null)}
                 className="relative w-full h-64 rounded-2xl shadow-md overflow-hidden"
               >
-                <Link to={`/story/${story._id}`} className="block w-full h-full">
+                <Link to={`/story/${story.id}`} className="block w-full h-full">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
                   
                   <motion.div 
                     animate={{ 
-                      scale: hoveredStory === story._id ? 1.1 : 1
+                      scale: hoveredStory === story.id ? 1.1 : 1
                     }}
                     transition={{ duration: 0.5 }}
                     className="absolute inset-0 bg-cover bg-center"

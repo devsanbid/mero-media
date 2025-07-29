@@ -33,16 +33,16 @@ const PostCard = ({ post }) => {
   const { commentsByPostId } = useSelector((state) => state.comments);
   
   // Get comments for this specific post
-  const postComments = commentsByPostId[post._id] || [];
+  const postComments = commentsByPostId[post.id] || [];
 
   // Animate card on mount and fetch comments
   useEffect(() => {
     setIsVisible(true);
     // Fetch comments for this post
-    if (post._id) {
-      dispatch(getCommentsByPost(post._id));
+    if (post.id) {
+      dispatch(getCommentsByPost(post.id));
     }
-  }, [post._id, dispatch]);
+  }, [post.id, dispatch]);
 
   const handleDeletePost = () => {
     if (window.confirm('Are you sure you want to delete this post?')) {
@@ -59,18 +59,18 @@ const PostCard = ({ post }) => {
 
   const handleCommentAdded = () => {
     // Refresh comments when a new comment is added
-    dispatch(getCommentsByPost(post._id));
+    dispatch(getCommentsByPost(post.id));
   };
 
   const handleProfileClick = () => {
-    if (post.user?._id) {
-      navigate(`/user/profile/${post.user._id}`);
+    if (post.user?.id) {
+      navigate(`/user/profile/${post.user.id}`);
     }
   };
 
   const handlePostClick = () => {
-    if (post._id) {
-      navigate(`/user/posts/${post._id}`);
+    if (post.id) {
+      navigate(`/user/posts/${post.id}`);
     }
   };
 
@@ -138,7 +138,7 @@ const PostCard = ({ post }) => {
           </div>
 
           {/* Post Actions */}
-          {userDetails?._id === post.user?._id && (
+          {userDetails?.id === post.user?.id && (
             <div className="relative">
               <button
                 onClick={() => setShowDropdown(!showDropdown)}
@@ -288,7 +288,7 @@ const PostCard = ({ post }) => {
               {isLoggedIn && (
                 <div className="mb-4">
                   <CommentForm
-                    postId={post._id}
+                    postId={post.id}
                     onCommentAdded={handleCommentAdded}
                   />
                 </div>
@@ -298,7 +298,7 @@ const PostCard = ({ post }) => {
               <div className="space-y-3">
                 {postComments.length > 0 ? (
                   postComments.map((comment) => (
-                    <div key={comment._id} className="flex space-x-3">
+                    <div key={comment.id} className="flex space-x-3">
                       <img
                         src={getImageUrl(comment.user?.profilePicture) || '/default-avatar.png'}
                         alt={comment.user?.fullName || 'User'}

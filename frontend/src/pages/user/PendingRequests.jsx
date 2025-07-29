@@ -100,7 +100,7 @@ const PendingRequests = () => {
           </motion.button>
 
           <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-            <Link to={`/profile/${request.sender._id}`}>
+            <Link to={`/profile/${request.sender.id}`}>
               <motion.div
                 whileHover={{ scale: 1.08, y: -5 }}
                 className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:border-blue-100 transition-all duration-300"
@@ -117,7 +117,7 @@ const PendingRequests = () => {
 
         <div className="pt-14 pb-5 px-5">
           <div className="text-center mb-4">
-            <Link to={`/profile/${request.sender._id}`} className="group">
+            <Link to={`/profile/${request.sender.id}`} className="group">
               <h3 className="font-bold text-gray-800 text-lg capitalize group-hover:text-blue-600 transition-colors duration-300">{request.sender.fullName}</h3>
             </Link>
             <p className="text-sm text-blue-500 font-medium">@{request.sender.username}</p>
@@ -128,7 +128,7 @@ const PendingRequests = () => {
 
           <div className="flex flex-col gap-2.5">
             <Link
-              to={`/profile/${request.sender._id}`}
+              to={`/profile/${request.sender.id}`}
               className="w-full py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center justify-center group"
             >
               <FiEye className="mr-2 group-hover:scale-110 transition-transform duration-300" /> 
@@ -140,7 +140,7 @@ const PendingRequests = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex-1 py-2 text-sm font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center justify-center shadow-sm hover:shadow"
-                onClick={() => handleAcceptRequest(request._id)}
+                onClick={() => handleAcceptRequest(request.id)}
               >
                 <FiCheck className="mr-1.5" /> Accept
               </motion.button>
@@ -148,7 +148,7 @@ const PendingRequests = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex-1 py-2 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 flex items-center justify-center shadow-sm hover:shadow"
-                onClick={() => handleRejectRequest(request._id)}
+                onClick={() => handleRejectRequest(request.id)}
               >
                 <FiX className="mr-1.5" /> Reject
               </motion.button>
@@ -181,7 +181,7 @@ const PendingRequests = () => {
       >
         <div className="flex items-center space-x-4">
           <div className="relative group">
-            <Link to={`/profile/${request.sender._id}`}>
+            <Link to={`/profile/${request.sender.id}`}>
               <motion.div
                 whileHover={{ scale: 1.12 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -198,7 +198,7 @@ const PendingRequests = () => {
           </div>
 
           <div className="flex flex-col">
-            <Link to={`/profile/${request.sender._id}`} className="group">
+            <Link to={`/profile/${request.sender.id}`} className="group">
               <h3 className="font-bold text-gray-800 group-hover:text-blue-600 transition-colors text-lg">
                 {request.sender.fullName}
               </h3>
@@ -245,7 +245,7 @@ const PendingRequests = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400 }}
               className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-green-500 to-green-600 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center"
-              onClick={() => handleAcceptRequest(request._id)}
+              onClick={() => handleAcceptRequest(request.id)}
             >
               <FiCheck className="mr-1.5" size={14} /> Accept
             </motion.button>
@@ -254,7 +254,7 @@ const PendingRequests = () => {
               whileTap={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 400 }}
               className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-red-500 to-red-600 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 flex items-center"
-              onClick={() => handleRejectRequest(request._id)}
+              onClick={() => handleRejectRequest(request.id)}
             >
               <FiX className="mr-1.5" size={14} /> Reject
             </motion.button>
@@ -414,7 +414,7 @@ const PendingRequests = () => {
               <AnimatePresence>
                 {filteredRequests.map(request => (
                   <motion.div
-                    key={request._id}
+                    key={request.id}
                     layout
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -501,9 +501,9 @@ const PendingRequests = () => {
                       whileTap={{ scale: 0.95 }}
                       className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors flex items-center shadow-md"
                       onClick={() => {
-                        const request = receivedRequests.find(req => req.sender._id === selectedUser._id);
+                        const request = receivedRequests.find(req => req.sender.id === selectedUser.id);
                         if (request) {
-                          handleAcceptRequest(request._id);
+                          handleAcceptRequest(request.id);
                           setSelectedUser(null);
                         }
                       }}
@@ -516,9 +516,9 @@ const PendingRequests = () => {
                       whileTap={{ scale: 0.95 }}
                       className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors flex items-center shadow-md"
                       onClick={() => {
-                        const request = receivedRequests.find(req => req.sender._id === selectedUser._id);
+                        const request = receivedRequests.find(req => req.sender.id === selectedUser.id);
                         if (request) {
-                          handleRejectRequest(request._id);
+                          handleRejectRequest(request.id);
                           setSelectedUser(null);
                         }
                       }}

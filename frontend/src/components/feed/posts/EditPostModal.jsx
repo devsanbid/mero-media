@@ -30,7 +30,7 @@ const EditPostModal = ({ isOpen, onClose, post }) => {
     setLoading(true);
     try {
       await dispatch(editPost({
-        postId: post._id,
+        postId: post.id,
         content,
         image,
         backgroundColor

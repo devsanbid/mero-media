@@ -92,7 +92,7 @@ const storySlice = createSlice({
       .addCase(deleteStory.fulfilled, (state, action) => {
         state.loading = false;
         state.stories = state.stories.filter(
-          (story) => story._id !== action.payload.storyId
+          (story) => story.id !== action.payload.storyId
         ); // Remove story from state
       })
       .addCase(deleteStory.rejected, (state, action) => {

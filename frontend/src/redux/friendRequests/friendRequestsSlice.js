@@ -129,14 +129,14 @@ const friendRequestsSlice = createSlice({
       .addCase(acceptFriendRequest.fulfilled, (state, action) => {
         const acceptedRequestId = action.payload.requestId;
         state.receivedRequests = state.receivedRequests.filter(
-          (req) => req._id !== acceptedRequestId
+          (req) => req.id !== acceptedRequestId
         );
         state.friendsList.push(action.payload.data);
       })
       .addCase(rejectFriendRequest.fulfilled, (state, action) => {
         const rejectedRequestId = action.payload.requestId;
         state.receivedRequests = state.receivedRequests.filter(
-          (req) => req._id !== rejectedRequestId
+          (req) => req.id !== rejectedRequestId
         );
       })
 
@@ -152,13 +152,13 @@ const friendRequestsSlice = createSlice({
       .addCase(cancelSentRequest.fulfilled, (state, action) => {
         const canceledRequestId = action.meta.arg;
         state.sentRequests = state.sentRequests.filter(
-          (req) => req._id !== canceledRequestId
+          (req) => req.id !== canceledRequestId
         );
       })
       .addCase(unfriend.fulfilled, (state, action) => {
         const removedFriendId = action.payload.friendId;
         state.friendsList = state.friendsList.filter(
-          (friend) => friend._id !== removedFriendId
+          (friend) => friend.id !== removedFriendId
         );
       })
       .addMatcher(

@@ -97,7 +97,7 @@ const Sidebar = ({ isSidebar }) => {
             </motion.button>
 
             <div>
-              <Link to={userDetails?._id ? `/user/profile/${userDetails._id}` : '/user/me'} className="relative overflow-hidden">
+              <Link to={userDetails?.id ? `/user/profile/${userDetails.id}` : '/user/me'} className="relative overflow-hidden">
                 <motion.div
                   className={`flex items-center space-x-2.5 border-b border-gray-200 bg-white ${minimize ? 'justify-center py-6' : 'px-5 py-4'}`}
                 >
@@ -157,7 +157,7 @@ const Sidebar = ({ isSidebar }) => {
                       variants={itemVariants}
                     >
                       <Link
-                        to={item.myProfile ? (userDetails?._id ? `/user/profile/${userDetails._id}` : '/user/me') : item.href}
+                        to={item.myProfile ? (userDetails?.id ? `/user/profile/${userDetails.id}` : '/user/me') : item.href}
                         className={`flex items-center rounded-xl transition-all duration-200 
                           ${isActive
                             ? 'bg-indigo-600 text-white shadow-md'

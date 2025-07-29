@@ -123,8 +123,8 @@ const Header = ({ toggleSidebar }) => {
 
                 <div
                   onClick={() => {
-                    if (userDetails?._id) {
-                      handleNavigation(`/user/profile/${userDetails._id}`);
+                    if (userDetails?.id) {
+                      handleNavigation(`/user/profile/${userDetails.id}`);
                     } else {
                       handleNavigation('/user/me');
                     }
@@ -252,8 +252,8 @@ const Header = ({ toggleSidebar }) => {
                     >
                       <div
                         onClick={() => {
-                          if (userDetails?._id) {
-                            handleNavigation(`/user/profile/${userDetails._id}`);
+                          if (userDetails?.id) {
+                            handleNavigation(`/user/profile/${userDetails.id}`);
                           } else {
                             handleNavigation('/user/me');
                           }

@@ -98,7 +98,7 @@ const notificationsSlice = createSlice({
       })
       .addCase(markNotificationAsRead.fulfilled, (state, action) => {
         const index = state.notifications.findIndex((notification) => 
-          notification._id === action.meta.arg
+          notification.id === action.meta.arg
         );
         if (index !== -1) {
           if (!state.notifications[index].isRead) {
@@ -110,11 +110,11 @@ const notificationsSlice = createSlice({
       })
       .addCase(deleteNotification.fulfilled, (state, action) => {
         const deletedNotification = state.notifications.find(
-          notification => notification._id === action.meta.arg
+          notification => notification.id === action.meta.arg
         );
         
         state.notifications = state.notifications.filter(
-          notification => notification._id !== action.meta.arg
+          notification => notification.id !== action.meta.arg
         );
         
         // If the deleted notification was unread, decrease the unread count

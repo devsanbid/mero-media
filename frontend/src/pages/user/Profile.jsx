@@ -55,7 +55,7 @@ const Following = ({ users, user }) => (
 const Posts = ({ userPosts, loggedInUserId, user, usersList }) => (
   <div className="p-6">
     <h3 className="text-xl font-bold mb-4">Posts</h3>
-    {loggedInUserId === user._id && (
+    {loggedInUserId === user.id && (
       <div className="mb-6">
         <PostForm />
       </div>
@@ -83,16 +83,16 @@ const UserProfile = () => {
   const sentRequests = useSelector((state) => state.friendRequests?.sentRequests || []);
   const receivedRequests = useSelector((state) => state.friendRequests?.receivedRequests || []);
   const friendsList = useSelector((state) => state.friendRequests?.friendsList || []);
-  const loggedInUserId = useSelector((state) => state.auth.user?._id);
+  const loggedInUserId = useSelector((state) => state.auth.user?.id);
   
   // Filter posts based on whether viewing own profile or another user's profile
   const userPosts = posts.filter((post) => {
     // If no profileId (viewing /user/me), only show logged-in user's posts
     if (!profileId) {
-      return post.user?._id === loggedInUserId;
+      return post.user?.id === loggedInUserId;
     }
     // If viewing another user's profile, show that user's posts
-    return post.user?._id === user?._id;
+    return post.user?.id === user?.id;
   });
 
   // Get current user from Redux
@@ -169,17 +169,17 @@ const UserProfile = () => {
   }
 
   // Check friendship status and requests
-  const isFriend = friendsList.some((friend) => friend._id === user._id);
-  const hasSentRequest = sentRequests.some((req) => req.receiver?._id === user._id);
-  const sentRequestId = sentRequests.find((req) => req.receiver?._id === user._id)?._id;
-  const hasReceivedRequest = receivedRequests.some((req) => req.sender?._id === user._id);
-  const receivedRequestId = receivedRequests.find((req) => req.sender?._id === user._id)?._id;
+  const isFriend = friendsList.some((friend) => friend.id === user.id);
+  const hasSentRequest = sentRequests.some((req) => req.receiver?.id === user.id);
+  const sentRequestId = sentRequests.find((req) => req.receiver?.id === user.id)?.id;
+  const hasReceivedRequest = receivedRequests.some((req) => req.sender?.id === user.id);
+  const receivedRequestId = receivedRequests.find((req) => req.sender?.id === user.id)?.id;
 
   // Handle friend request actions
   const handleSendRequest = () => {
     // dispatch(sendFriendRequest(user._id));
     // dispatch(fetchSentRequests());
-    console.log('Send friend request to:', user._id);
+    console.log('Send friend request to:', user.id);
   };
 
   const handleCancelRequest = () => {
@@ -201,7 +201,7 @@ const UserProfile = () => {
   const handleUnfriend = () => {
     // dispatch(unfriend(user._id));
     // dispatch(fetchFriendsList());
-    console.log('Unfriend user:', user._id);
+    console.log('Unfriend user:', user.id);
   };
 
   const renderSection = () => {
@@ -247,7 +247,7 @@ const UserProfile = () => {
               alt="Cover"
               className="w-full h-full object-cover"
             />
-            {loggedInUserId === user._id && (
+            {loggedInUserId === user.id && (
               <div className="absolute bottom-4 right-4 flex space-x-2">
                 <Link to="/user/settings" className="px-2 sm:px-4 py-1 sm:py-2 bg-slate-700 text-white rounded-md hover:bg-slate-800 transition duration-300">
                   Edit Cover Image
@@ -277,7 +277,7 @@ const UserProfile = () => {
                 <p className="text-sm sm:text-base text-gray-700">Joined: {new Date(user.createdAt).toLocaleDateString()}</p>
               </div>
             </div>
-            {!profileId || loggedInUserId === user._id ? (
+            {!profileId || loggedInUserId === user.id ? (
               <button className="mt-4 sm:mt-0 px-3 sm:px-4 py-1 sm:py-2 bg-indigo-500 text-white rounded-md hover:bg-blue-600 transition duration-300">
                 Your Profile
               </button>

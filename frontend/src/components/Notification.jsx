@@ -17,7 +17,7 @@ const Notification = () => {
   useEffect(() => {
     // Convert friend requests to notifications
     const requestNotifications = receivedRequests.map(request => ({
-      id: request._id,
+      id: request.id,
       type: 'friend_request',
       message: `${request.sender?.fullName} sent you a friend request`,
       user: request.sender,

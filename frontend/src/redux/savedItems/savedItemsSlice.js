@@ -60,10 +60,10 @@ const savedItemsSlice = createSlice({
         
         if (isSaved) {
           // Add the item to savedItems if it was added
-          state.savedItems.push({ post: { _id: postId } });
+          state.savedItems.push({ post: { id: postId } });
         } else {
           // Remove the item from savedItems if it was removed
-          state.savedItems = state.savedItems.filter((item) => item.post?._id !== postId);
+          state.savedItems = state.savedItems.filter((item) => item.post?.id !== postId);
         }
         
         state.error = null;

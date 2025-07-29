@@ -33,11 +33,11 @@ const PostDetail = () => {
   const { isLoggedIn, userDetails } = useSelector((state) => state.auth);
   
   // Find the specific post
-  const post = posts.find(p => p._id === postId);
+  const post = posts.find(p => p.id === postId);
   const postComments = commentsByPostId[postId] || [];
   
   // Check if current user has liked this post
-  const isLiked = post?.likes?.some(like => like.user === userDetails?._id) || false;
+  const isLiked = post?.likes?.some(like => like.user === userDetails?.id) || false;
   const likesCount = post?.likes?.length || 0;
   
   useEffect(() => {
@@ -66,8 +66,8 @@ const PostDetail = () => {
   };
   
   const handleProfileClick = () => {
-    if (post?.user?._id) {
-      navigate(`/user/profile/${post.user._id}`);
+    if (post?.user?.id) {
+      navigate(`/user/profile/${post.user.id}`);
     }
   };
   
@@ -154,7 +154,7 @@ const PostDetail = () => {
               </div>
               
               {/* Dropdown menu for post owner */}
-              {isLoggedIn && userDetails?._id === post.user?._id && (
+              {isLoggedIn && userDetails?.id === post.user?.id && (
                 <div className="relative">
                   <button
                     onClick={() => setShowDropdown(!showDropdown)}
@@ -287,7 +287,7 @@ const PostDetail = () => {
               {postComments.length > 0 ? (
                 postComments.map((comment) => (
                   <motion.div
-                    key={comment._id}
+                    key={comment.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="flex space-x-3 p-4 bg-gray-50 rounded-lg"
@@ -296,13 +296,13 @@ const PostDetail = () => {
                       src={getImageUrl(comment.user?.profilePicture) || '/default-avatar.png'}
                       alt={comment.user?.fullName || 'User'}
                       className="w-10 h-10 rounded-full object-cover cursor-pointer"
-                      onClick={() => navigate(`/user/profile/${comment.user?._id}`)}
+                      onClick={() => navigate(`/user/profile/${comment.user?.id}`)}
                     />
                     <div className="flex-1">
                       <div className="flex items-center space-x-2 mb-1">
                         <span
                           className="font-medium text-gray-900 cursor-pointer hover:text-blue-600 transition-colors"
-                          onClick={() => navigate(`/user/profile/${comment.user?._id}`)}
+                          onClick={() => navigate(`/user/profile/${comment.user?.id}`)}
                         >
                           {comment.user?.fullName || 'Unknown User'}
                         </span>

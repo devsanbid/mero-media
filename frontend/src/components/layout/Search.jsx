@@ -73,7 +73,7 @@ const Search = ({ isMobile = false, onClose }) => {
       case 'Enter':
         e.preventDefault();
         if (selectedIndex >= 0 && selectedIndex < filteredUsers.length) {
-          handleUserClick(filteredUsers[selectedIndex]._id);
+          handleUserClick(filteredUsers[selectedIndex].id);
         }
         break;
       case 'Escape':
@@ -157,12 +157,12 @@ const Search = ({ isMobile = false, onClose }) => {
               >
                 {filteredUsers.map((user, index) => (
                   <motion.div
-                    key={user._id}
+                    key={user.id}
                     whileHover={{ backgroundColor: '#f9fafb' }}
                     className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${
                       index === selectedIndex ? 'bg-indigo-50 border border-indigo-200' : 'hover:bg-gray-50'
                     }`}
-                    onClick={() => handleUserClick(user._id)}
+                    onClick={() => handleUserClick(user.id)}
                   >
                     <img
                       src={getImageUrl(user.profilePicture) || '/default-avatar.png'}
@@ -231,12 +231,12 @@ const Search = ({ isMobile = false, onClose }) => {
             <div className="p-2">
               {filteredUsers.map((user, index) => (
                 <motion.div
-                  key={user._id}
+                  key={user.id}
                   whileHover={{ backgroundColor: '#f9fafb' }}
                   className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors ${
                     index === selectedIndex ? 'bg-indigo-50 border border-indigo-200' : 'hover:bg-gray-50'
                   }`}
-                  onClick={() => handleUserClick(user._id)}
+                  onClick={() => handleUserClick(user.id)}
                 >
                   <img
                     src={getImageUrl(user.profilePicture) || '/default-avatar.png'}

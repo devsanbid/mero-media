@@ -26,27 +26,27 @@ const InteractionButtons = ({
   const [optimisticBookmarked, setOptimisticBookmarked] = useState(false);
 
   const { commentsByPostId } = useSelector((state) => state.comments);
-  const comments = commentsByPostId[post._id] || [];
+  const comments = commentsByPostId[post.id] || [];
 
   const handleToggleBookmark = () => {
     setOptimisticBookmarked(!optimisticBookmarked);
   };
 
   const handleToggleLike = () => {
-    const wasLiked = likers.some((liker) => liker._id === userDetails?._id);
+    const wasLiked = likers.some((liker) => liker.id === userDetails?.id);
 
     setOptimisticLiked(!wasLiked);
 
     let updatedLikers = [...likers];
     if (wasLiked) {
-      updatedLikers = updatedLikers.filter(liker => liker._id !== userDetails?._id);
+      updatedLikers = updatedLikers.filter(liker => liker.id !== userDetails?.id);
     } else if (userDetails) {
       updatedLikers.push(userDetails);
     }
     setLikers(updatedLikers);
 
-    dispatch(toggleLikePost(post._id)).then(() => {
-      dispatch(getPostLikers(post._id)).then((action) => {
+    dispatch(toggleLikePost(post.id)).then(() => {
+      dispatch(getPostLikers(post.id)).then((action) => {
         if (action.payload?.data) {
           setLikers(action.payload.data);
         }
@@ -67,15 +67,15 @@ const InteractionButtons = ({
       navigator.share({
         title: `Post by ${post.user?.fullName}`,
         text: post.content?.substring(0, 100) + '...',
-        url: window.location.origin + '/posts/' + post._id,
+        url: window.location.origin + '/posts/' + post.id,
       });
     } else {
-      navigator.clipboard.writeText(window.location.origin + '/posts/' + post._id);
+      navigator.clipboard.writeText(window.location.origin + '/posts/' + post.id);
     }
   };
 
   useEffect(() => {
-    dispatch(getPostLikers(post._id)).then((action) => {
+    dispatch(getPostLikers(post.id)).then((action) => {
       if (action.payload?.data) {
         setLikers(action.payload.data);
       }
@@ -83,11 +83,11 @@ const InteractionButtons = ({
   }, [dispatch, post]);
 
   useEffect(() => {
-    setOptimisticLiked(likers.some((liker) => liker._id === userDetails?._id));
+    setOptimisticLiked(likers.some((liker) => liker.id === userDetails?.id));
   }, [likers, userDetails]);
 
   useEffect(() => {
-    dispatch(getCommentsByPost(post._id));
+    dispatch(getCommentsByPost(post.id));
   }, [dispatch, post]);
 
   return (
@@ -100,7 +100,7 @@ const InteractionButtons = ({
           <div className="flex -space-x-3">
             {likers.slice(0, 3).map((liker) => (
               <img
-                key={liker._id}
+                key={liker.id}
                 src={liker.profilePicture}
                 alt={liker.fullName}
                 className="w-7 h-7 rounded-full border-2 border-white object-cover shadow-md"

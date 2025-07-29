@@ -21,7 +21,7 @@ const MyPosts = () => {
   const closeModal = () => setIsModalOpen(false);
 
   // Filter posts by current user
-  const userPosts = posts.filter(post => post.user._id === user?._id);
+  const userPosts = posts.filter(post => post.user.id === user?.id);
 
   return (
     <AuthRedirect>
@@ -81,7 +81,7 @@ const MyPosts = () => {
               <AnimatePresence>
                 {userPosts.map((post, index) => (
                   <motion.div
-                    key={post._id}
+                    key={post.id}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}

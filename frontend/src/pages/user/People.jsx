@@ -26,7 +26,7 @@ const FriendsSuggestion = () => {
   const receivedRequests = useSelector((state) => state.friendRequests?.receivedRequests || []);
   const friendsList = useSelector((state) => state.friendRequests?.friendsList || []);
   const { userDetails } = useSelector((state) => state.auth);
-  const loggedInUserId = userDetails?._id;
+  const loggedInUserId = userDetails?.id;
 
 
 
@@ -84,10 +84,10 @@ const FriendsSuggestion = () => {
 
     // Category filter
     if (filterBy === 'all') return matchesSearch;
-    if (filterBy === 'friends') return friendsList.some(friend => friend._id === user._id) && matchesSearch;
-    if (filterBy === 'requests') return receivedRequests.some(req => req.sender._id === user._id) && matchesSearch;
-    if (filterBy === 'sent') return sentRequests.some(req => req.receiver._id === user._id) && matchesSearch;
-    if (filterBy === 'favorites') return favorites.includes(user._id) && matchesSearch;
+    if (filterBy === 'friends') return friendsList.some(friend => friend.id === user.id) && matchesSearch;
+    if (filterBy === 'requests') return receivedRequests.some(req => req.sender.id === user.id) && matchesSearch;
+    if (filterBy === 'sent') return sentRequests.some(req => req.receiver.id === user.id) && matchesSearch;
+    if (filterBy === 'favorites') return favorites.includes(user.id) && matchesSearch;
 
     return matchesSearch;
   }).sort((a, b) => {
@@ -96,8 +96,8 @@ const FriendsSuggestion = () => {
     if (sortBy === 'username') return (a.username || '').localeCompare(b.username || '');
     if (sortBy === 'recent') return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
     if (sortBy === 'favorites') {
-      const aIsFav = favorites.includes(a._id);
-      const bIsFav = favorites.includes(b._id);
+      const aIsFav = favorites.includes(a.id);
+      const bIsFav = favorites.includes(b.id);
       return bIsFav - aIsFav;
     }
     return 0;
@@ -107,25 +107,25 @@ const FriendsSuggestion = () => {
   const getTabUsers = () => {
     if (activeTab === 'suggestions') {
       return filteredUsers.filter(user =>
-        user._id !== loggedInUserId &&
-        !friendsList.some(friend => friend._id === user._id) &&
-        !sentRequests.some(req => req.receiver._id === user._id) &&
-        !receivedRequests.some(req => req.sender._id === user._id)
+        user.id !== loggedInUserId &&
+        !friendsList.some(friend => friend.id === user.id) &&
+        !sentRequests.some(req => req.receiver.id === user.id) &&
+        !receivedRequests.some(req => req.sender.id === user.id)
       );
     }
     if (activeTab === 'friends') {
       return filteredUsers.filter(user =>
-        optimisticFriendsList.some(friend => friend._id === user._id)
+        optimisticFriendsList.some(friend => friend.id === user.id)
       );
     }
     if (activeTab === 'requests') {
       return filteredUsers.filter(user =>
-        optimisticReceivedRequests.some(req => req.sender._id === user._id)
+        optimisticReceivedRequests.some(req => req.sender.id === user.id)
       );
     }
     if (activeTab === 'sent') {
       return filteredUsers.filter(user =>
-        optimisticSentRequests.some(req => req.receiver._id === user._id)
+        optimisticSentRequests.some(req => req.receiver.id === user.id)
       );
     }
     return [];
@@ -168,7 +168,7 @@ const FriendsSuggestion = () => {
   }
 
   const UserCard = ({ user }) => {
-    const isFavorite = favorites.includes(user._id);
+    const isFavorite = favorites.includes(user.id);
 
     return (
       <motion.div
@@ -206,7 +206,7 @@ const FriendsSuggestion = () => {
 
           {/* Profile picture with animation */}
           <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-            <Link to={`/profile/${user._id}`}>
+            <Link to={`/profile/${user.id}`}>
               <motion.div
                 whileHover={{ scale: 1.08, y: -5 }}
                 className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:border-blue-100 transition-all duration-300"
@@ -223,7 +223,7 @@ const FriendsSuggestion = () => {
 
         <div className="pt-14 pb-5 px-5">
           <div className="text-center mb-4">
-            <Link to={`/profile/${user._id}`} className="group">
+            <Link to={`/profile/${user.id}`} className="group">
               <h3 className="font-bold text-gray-800 text-lg capitalize group-hover:text-blue-600 transition-colors duration-300">{user.fullName || 'Unknown User'}</h3>
             </Link>
             <p className="text-sm text-blue-500 font-medium">@{user.username || 'username'}</p>
@@ -234,14 +234,14 @@ const FriendsSuggestion = () => {
 
           <div className="flex flex-col gap-2.5">
             <Link
-              to={`/profile/${user._id}`}
+              to={`/profile/${user.id}`}
               className="w-full py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center justify-center group"
             >
               <FiEye className="mr-2 group-hover:scale-110 transition-transform duration-300" /> 
               <span className="group-hover:translate-x-0.5 transition-transform duration-300">View Profile</span>
             </Link>
             
-            {user._id === loggedInUserId ? (
+            {user.id === loggedInUserId ? (
               <button className="w-full py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl cursor-not-allowed opacity-70">
                 <span className="flex items-center justify-center">
                   <FiUserCheck className="mr-2" /> Your Profile
@@ -249,7 +249,7 @@ const FriendsSuggestion = () => {
               </button>
             ) : (
               <FriendRequestButton 
-                userId={user._id} 
+                userId={user.id} 
                 onFriendshipChange={handleFriendshipChange}
                 className="w-full"
               />
@@ -280,7 +280,7 @@ const FriendsSuggestion = () => {
   };
 
   const UserListItem = ({ user }) => {
-    const isFavorite = favorites.includes(user._id);
+    const isFavorite = favorites.includes(user.id);
 
     return (
       <motion.div
@@ -293,7 +293,7 @@ const FriendsSuggestion = () => {
       >
         <div className="flex items-center space-x-4">
           <div className="relative group">
-            <Link to={`/profile/${user._id}`}>
+            <Link to={`/profile/${user.id}`}>
               <motion.div
                 whileHover={{ scale: 1.12 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -310,7 +310,7 @@ const FriendsSuggestion = () => {
           </div>
 
           <div className="flex flex-col">
-            <Link to={`/profile/${user._id}`} className="group">
+            <Link to={`/profile/${user.id}`} className="group">
               <h3 className="font-bold text-gray-800 group-hover:text-blue-600 transition-colors text-lg">
                 {user.fullName || 'Unknown User'}
               </h3>
@@ -354,13 +354,13 @@ const FriendsSuggestion = () => {
             <IoExpandSharp size={18} />
           </button>
 
-          {user._id === loggedInUserId ? (
+          {user.id === loggedInUserId ? (
             <span className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl border border-gray-200">
               You
             </span>
           ) : (
             <FriendRequestButton 
-              userId={user._id} 
+              userId={user.id} 
               onFriendshipChange={handleFriendshipChange}
             />
           )}
@@ -592,7 +592,7 @@ const FriendsSuggestion = () => {
               <AnimatePresence>
                 {tabUsers.map(user => (
                   <motion.div
-                    key={user._id}
+                    key={user.id}
                     layout
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -687,16 +687,16 @@ const FriendsSuggestion = () => {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link
-                        to={`/profile/${selectedUser._id}`}
+                        to={`/profile/${selectedUser.id}`}
                         className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center shadow-md"
                       >
                         <FiEye className="mr-2" /> View Profile
                       </Link>
                     </motion.div>
                     
-                    {selectedUser._id !== loggedInUserId && (
+                    {selectedUser.id !== loggedInUserId && (
                       <FriendRequestButton 
-                        userId={selectedUser._id} 
+                        userId={selectedUser.id} 
                         onFriendshipChange={handleFriendshipChange}
                       />
                     )}

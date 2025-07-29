@@ -36,9 +36,9 @@ export default function StorySection() {
 
   if (stories && stories.length > 0) {
     stories.forEach((story) => {
-      if (!seenUserIds.has(story.user._id)) {
+      if (!seenUserIds.has(story.user.id)) {
         uniqueUserStories.push(story);
-        seenUserIds.add(story.user._id);
+        seenUserIds.add(story.user.id);
       }
     });
   }
@@ -102,17 +102,17 @@ export default function StorySection() {
             
             {uniqueUserStories.map((story) => (
               <motion.div 
-                key={story._id} 
+                key={story.id} 
                 whileHover={{ y: -5 }}
                 className="flex-shrink-0"
-                onHoverStart={() => setHoveredStory(story._id)}
+                onHoverStart={() => setHoveredStory(story.id)}
                 onHoverEnd={() => setHoveredStory(null)}
               >
-                <Link to={`/story/${story._id}`} className="flex flex-col items-center justify-center text-center cursor-pointer max-w-20">
+                <Link to={`/story/${story.id}`} className="flex flex-col items-center justify-center text-center cursor-pointer max-w-20">
                   <div className="relative">
                     <motion.div 
                       whileHover={{ scale: 1.05 }}
-                      className={`w-20 h-20 rounded-full overflow-hidden ${hoveredStory === story._id ? 'bg-gradient-to-br from-blue-500 to-indigo-600' : 'bg-gradient-to-br from-indigo-400 to-blue-500'} p-[2px]`}
+                      className={`w-20 h-20 rounded-full overflow-hidden ${hoveredStory === story.id ? 'bg-gradient-to-br from-blue-500 to-indigo-600' : 'bg-gradient-to-br from-indigo-400 to-blue-500'} p-[2px]`}
                     >
                       <div className="w-full h-full rounded-full overflow-hidden bg-white p-[2px]">
                         <img
@@ -124,7 +124,7 @@ export default function StorySection() {
                     </motion.div>
                     
                     <AnimatePresence>
-                      {hoveredStory === story._id && (
+                      {hoveredStory === story.id && (
                         <motion.div 
                           initial={{ scale: 0, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
@@ -138,7 +138,7 @@ export default function StorySection() {
                   </div>
                   <motion.span 
                     className="text-sm font-medium mt-2 text-gray-800"
-                    animate={{ color: hoveredStory === story._id ? "#4F46E5" : "#1F2937" }}
+                    animate={{ color: hoveredStory === story.id ? "#4F46E5" : "#1F2937" }}
                   >
                     {story.user.fullName}
                   </motion.span>
