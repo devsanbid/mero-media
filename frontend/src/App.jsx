@@ -1,31 +1,31 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Provider } from "react-redux";
-import { store } from "./redux/store";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Layout from "./components/Layout";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Home from "./pages/user/Home";
-import Login from "./pages/auth/Login";
-import Register from "./pages/auth/Register";
-import Profile from "./pages/user/user/Profile";
-import Settings from "./pages/user/Settings";
-import Friends from "./pages/user/Friends";
-import Bookmarks from "./pages/user/Bookmarks";
-import Stories from "./pages/user/Stories";
-import Explore from "./pages/user/Explore";
-import People from "./pages/user/People";
-import Posts from "./pages/user/Posts";
-import PostDetail from "./pages/user/PostDetail";
-import PendingRequests from "./pages/user/PendingRequests";
-import SentRequests from "./pages/user/SentRequests";
-import Contact from "./pages/user/Contact";
-import Hashtags from "./pages/user/Hashtags";
-import Trending from "./pages/user/Trending";
-import StoryDetail from "./pages/user/StoryDetail";
-import MyPosts from "./pages/user/MyPosts";
-import User from "./pages/user/User";
-import Admin from "./pages/admin/Admin";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Layout from './components/Layout';
+import ProtectedRoute from './components/ProtectedRoute';
+import Home from './pages/user/Home';
+import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
+import Profile from './pages/user/Profile';
+import Settings from './pages/user/Settings';
+import Friends from './pages/user/Friends';
+import Bookmarks from './pages/user/Bookmarks';
+import Stories from './pages/user/Stories';
+import Explore from './pages/user/Explore';
+import People from './pages/user/People';
+import Posts from './pages/user/Posts';
+import PostDetail from './pages/PostDetail';
+import PendingRequests from './pages/user/PendingRequests';
+import SentRequests from './pages/user/SentRequests';
+import Contact from './pages/user/Contact';
+import Hashtags from './pages/user/Hashtags';
+import Trending from './pages/user/Trending';
+import StoryDetail from './pages/user/StoryDetail';
+import MyPosts from './pages/user/MyPosts';
+import User from './pages/user/User';
+import Admin from './pages/admin/Admin';
 
 function App() {
   return (
@@ -36,15 +36,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            <Route
-              path="/user"
-              element={
-                <ProtectedRoute>
-                  <Layout />
-                </ProtectedRoute>
-              }
-            >
+            <Route path="/user" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
               <Route index element={<Home />} />
+              <Route path="home" element={<Home />} />
               <Route path="profile/:profileId" element={<Profile />} />
               <Route path="me" element={<Profile />} />
               <Route path="settings" element={<Settings />} />
@@ -62,19 +56,12 @@ function App() {
               <Route path="contact" element={<Contact />} />
               <Route path="hashtags" element={<Hashtags />} />
               <Route path="trending" element={<Trending />} />
-              <Route path="user" element={<User />} />
+              <Route path="user-profile" element={<User />} />
             </Route>
-
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute requiredRole="admin">
-                  <Admin />
-                </ProtectedRoute>
-              }
-            >
-              <Route path="dashboard" element={<User />} />
+            <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><Layout /></ProtectedRoute>}>
+              <Route index element={<Admin />} />
             </Route>
+           
           </Routes>
           <ToastContainer
             position="top-right"
@@ -93,4 +80,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

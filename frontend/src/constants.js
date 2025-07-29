@@ -34,3 +34,38 @@ export const patternStyles = {
     backgroundSize: 'auto'
   }
 };
+
+// Helper function to get image URL
+export const getImageUrl = (imagePath) => {
+  if (!imagePath) return null;
+  
+  // If it's already a full URL, return as is
+  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+    return imagePath;
+  }
+  
+  // If it's a relative path, prepend the backend URL
+  const baseUrl = import.meta.env.VITE_BACKEND_API || 'http://localhost:5000/api';
+  const backendUrl = baseUrl.replace('/api', ''); // Remove /api suffix for image URLs
+  
+  return `${backendUrl}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`;
+};
+
+// Default avatar fallback
+export const DEFAULT_AVATAR = '/default-avatar.png';
+
+// Default cover image fallback
+export const DEFAULT_COVER = '/default-cover.jpg';
+
+// Backend URL
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_API?.replace('/api', '') || 'http://localhost:5000';
+
+
+
+// Default image URLs
+export const DEFAULT_IMAGES = {
+  PROFILE_PICTURE: 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
+  COVER_IMAGE: 'https://ih1.redbubble.net/cover.4093136.2400x600.jpg',
+  PROFILE_SMALL: 'https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg',
+  COVER_SMALL: 'https://ih1.redbubble.net/cover.4093136.2400x600.jpg'
+};
