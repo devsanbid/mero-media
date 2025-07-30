@@ -23,7 +23,7 @@ export const postComment = asyncHandler(async (req, res, next) => {
     include: [{
       model: User,
       as: 'user',
-      attributes: ['fullName', 'profilePicture']
+      attributes: ['id', 'fullName', 'profilePicture', 'username']
     }]
   });
 
@@ -93,7 +93,7 @@ export const getCommentsByPost = asyncHandler(async (req, res, next) => {
     include: [{
       model: User,
       as: 'user',
-      attributes: ['fullName', 'profilePicture']
+      attributes: ['id', 'fullName', 'profilePicture', 'username']
     }]
   });
 

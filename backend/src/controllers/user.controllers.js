@@ -89,11 +89,11 @@ export const loginUser = asyncHandler(async (req, res, next) => {
   }
 
   // Generate JWT token
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+  const token = jwt.sign({ id: user.id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: '30d',
   });
 
-  res.status(200).json(new ApiResponse(200, 'User logged in successfully', { token }));
+  res.status(200).json(new ApiResponse(200, 'User logged in successfully', { token, role: user.role }));
 });
 
 // Get details of the logged-in user
@@ -172,11 +172,12 @@ export const updateUser = asyncHandler(async (req, res, next) => {
     bio,
     dob,
     isDpVerify,
+    website,
   } = req.body;
 
   const user = await User.findByPk(userId);
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ success: false, message: 'User not found' });
   }
 
   try {
@@ -185,15 +186,40 @@ export const updateUser = asyncHandler(async (req, res, next) => {
     if (fullName) updateData.fullName = fullName;
     if (email) updateData.email = email;
     if (password) updateData.password = password;
-    if (profilePicture) updateData.profilePicture = profilePicture;
-    if (coverImage) updateData.coverImage = coverImage;
     if (location) updateData.location = location;
     if (bio) updateData.bio = bio;
     if (dob) updateData.dob = dob;
+    if (website) updateData.website = website;
     if (isDpVerify !== undefined) updateData.isDpVerify = isDpVerify;
 
-    await user.update(updateData);
-    res.json({ data: user });
+    // Handle file uploads
+    if (req.files) {
+      if (req.files.profilePicture && req.files.profilePicture[0]) {
+        updateData.profilePicture = `/uploads/${req.files.profilePicture[0].filename}`;
+      }
+      if (req.files.coverImage && req.files.coverImage[0]) {
+        updateData.coverImage = `/uploads/${req.files.coverImage[0].filename}`;
+      }
+    }
+
+    // Handle URL updates (when no file is uploaded)
+    if (!req.files || !req.files.profilePicture) {
+      if (profilePicture !== undefined) updateData.profilePicture = profilePicture;
+    }
+    if (!req.files || !req.files.coverImage) {
+      if (coverImage !== undefined) updateData.coverImage = coverImage;
+    }
+
+    const updatedUser = await user.update(updateData);
+    
+    // Return updated user data without password
+    const { password: _, ...userWithoutPassword } = updatedUser.toJSON();
+    
+    res.json({ 
+      success: true, 
+      message: 'User updated successfully',
+      user: userWithoutPassword 
+    });
   } catch (err) {
     if (err instanceof ValidationError) {
       // Format errors for the frontend
@@ -203,7 +229,7 @@ export const updateUser = asyncHandler(async (req, res, next) => {
           message: error.message
         };
       }
-      return res.status(400).json({ errors });
+      return res.status(400).json({ success: false, errors });
     }
     next(err);
   }
