@@ -30,7 +30,7 @@ import { fetchUsers } from "../../redux/users/usersSlice";
 const SettingsPage = () => {
   const [activeField, setActiveField] = useState(null);
   const dispatch = useDispatch();
-  const { isLoggedIn, userDetails, loading, error } = useSelector((state) => state.auth);
+  const { isLoggedIn, user: userDetails, loading, error } = useSelector((state) => state.auth);
   const sentRequests = useSelector((state) => state.friendRequests.sentRequests);
   const receivedRequests = useSelector((state) => state.friendRequests.receivedRequests);
   const friendsList = useSelector((state) => state.friendRequests.friendsList);
@@ -47,14 +47,16 @@ const SettingsPage = () => {
   });
 
   useEffect(() => {
-    dispatch(fetchUserDetails());
+    if (!userDetails && !loading) {
+      dispatch(fetchUserDetails());
+    }
     dispatch(fetchSentRequests());
     dispatch(fetchReceivedRequests());
     dispatch(fetchFriendsList());
-  }, [dispatch]);
+  }, [dispatch, userDetails, loading]);
 
   useEffect(() => {
-    if (userDetails) {
+    if (userDetails && userDetails._id) {
       setFormData({
         username: userDetails.username || "",
         email: userDetails.email || "",
@@ -67,7 +69,7 @@ const SettingsPage = () => {
         bio: userDetails.bio || "",
       });
     }
-  }, [userDetails]);
+  }, [userDetails?._id, userDetails?.username, userDetails?.email, userDetails?.fullName, userDetails?.profilePicture, userDetails?.coverImage, userDetails?.dob, userDetails?.location, userDetails?.bio]);
 
   const handleEdit = (field) => {
     setActiveField(field);

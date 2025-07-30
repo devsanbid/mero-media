@@ -306,7 +306,7 @@ const StoryDetail = () => {
               transition={{ delay: 0.2 }}
               className="relative z-10 w-full"
             >
-              <Link to={storyToShow?.user?.id ? `/profile/${storyToShow.user.id}` : '/user/me'} className="flex items-center bg-white/90 backdrop-blur-md py-3 px-4 rounded-xl shadow-lg mx-auto max-w-md">
+              <Link to={storyToShow?.user?.id ? `/user/profile/${storyToShow.user.id}` : '/user/me'} className="flex items-center bg-white/90 backdrop-blur-md py-3 px-4 rounded-xl shadow-lg mx-auto max-w-md">
                 <motion.img 
                   whileHover={{ scale: 1.1 }}
                   src={storyToShow?.user.profilePicture} 

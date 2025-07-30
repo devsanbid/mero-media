@@ -25,7 +25,7 @@ import { IoExpandSharp } from 'react-icons/io5';
 const PendingRequests = () => {
   const dispatch = useDispatch();
   const receivedRequests = useSelector((state) => state.friendRequests.receivedRequests);
-  const { userDetails } = useSelector((state) => state.auth);
+  const { user: userDetails } = useSelector((state) => state.auth);
   
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState('grid');
@@ -100,7 +100,7 @@ const PendingRequests = () => {
           </motion.button>
 
           <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-            <Link to={`/profile/${request.sender.id}`}>
+            <Link to={`/user/profile/${request.sender.id}`}>
               <motion.div
                 whileHover={{ scale: 1.08, y: -5 }}
                 className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:border-blue-100 transition-all duration-300"
@@ -117,7 +117,7 @@ const PendingRequests = () => {
 
         <div className="pt-14 pb-5 px-5">
           <div className="text-center mb-4">
-            <Link to={`/profile/${request.sender.id}`} className="group">
+            <Link to={`/user/profile/${request.sender.id}`} className="group">
               <h3 className="font-bold text-gray-800 text-lg capitalize group-hover:text-blue-600 transition-colors duration-300">{request.sender.fullName}</h3>
             </Link>
             <p className="text-sm text-blue-500 font-medium">@{request.sender.username}</p>
@@ -128,7 +128,7 @@ const PendingRequests = () => {
 
           <div className="flex flex-col gap-2.5">
             <Link
-              to={`/profile/${request.sender.id}`}
+              to={`/user/profile/${request.sender.id}`}
               className="w-full py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center justify-center group"
             >
               <FiEye className="mr-2 group-hover:scale-110 transition-transform duration-300" /> 
@@ -181,7 +181,7 @@ const PendingRequests = () => {
       >
         <div className="flex items-center space-x-4">
           <div className="relative group">
-            <Link to={`/profile/${request.sender.id}`}>
+            <Link to={`/user/profile/${request.sender.id}`}>
               <motion.div
                 whileHover={{ scale: 1.12 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -198,7 +198,7 @@ const PendingRequests = () => {
           </div>
 
           <div className="flex flex-col">
-            <Link to={`/profile/${request.sender.id}`} className="group">
+            <Link to={`/user/profile/${request.sender.id}`} className="group">
               <h3 className="font-bold text-gray-800 group-hover:text-blue-600 transition-colors text-lg">
                 {request.sender.fullName}
               </h3>

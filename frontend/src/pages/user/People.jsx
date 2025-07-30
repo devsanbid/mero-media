@@ -25,7 +25,7 @@ const FriendsSuggestion = () => {
   const sentRequests = useSelector((state) => state.friendRequests?.sentRequests || []);
   const receivedRequests = useSelector((state) => state.friendRequests?.receivedRequests || []);
   const friendsList = useSelector((state) => state.friendRequests?.friendsList || []);
-  const { userDetails } = useSelector((state) => state.auth);
+  const { user: userDetails } = useSelector((state) => state.auth);
   const loggedInUserId = userDetails?.id;
 
 
@@ -169,6 +169,10 @@ const FriendsSuggestion = () => {
 
   const UserCard = ({ user }) => {
     const isFavorite = favorites.includes(user.id);
+    
+    const isFriend = friendsList.some((friend) => friend.id === user.id);
+    const hasSentRequest = sentRequests.some((req) => req.receiver?.id === user.id);
+    const hasReceivedRequest = receivedRequests.some((req) => req.sender?.id === user.id);
 
     return (
       <motion.div
@@ -206,7 +210,7 @@ const FriendsSuggestion = () => {
 
           {/* Profile picture with animation */}
           <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2">
-            <Link to={`/profile/${user.id}`}>
+            <Link to={`/user/profile/${user.id}`}>
               <motion.div
                 whileHover={{ scale: 1.08, y: -5 }}
                 className="w-20 h-20 rounded-full border-4 border-white overflow-hidden shadow-lg group-hover:border-blue-100 transition-all duration-300"
@@ -223,7 +227,7 @@ const FriendsSuggestion = () => {
 
         <div className="pt-14 pb-5 px-5">
           <div className="text-center mb-4">
-            <Link to={`/profile/${user.id}`} className="group">
+            <Link to={`/user/profile/${user.id}`} className="group">
               <h3 className="font-bold text-gray-800 text-lg capitalize group-hover:text-blue-600 transition-colors duration-300">{user.fullName || 'Unknown User'}</h3>
             </Link>
             <p className="text-sm text-blue-500 font-medium">@{user.username || 'username'}</p>
@@ -234,7 +238,7 @@ const FriendsSuggestion = () => {
 
           <div className="flex flex-col gap-2.5">
             <Link
-              to={`/profile/${user.id}`}
+              to={`/user/profile/${user.id}`}
               className="w-full py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-300 flex items-center justify-center group"
             >
               <FiEye className="mr-2 group-hover:scale-110 transition-transform duration-300" /> 
@@ -293,7 +297,7 @@ const FriendsSuggestion = () => {
       >
         <div className="flex items-center space-x-4">
           <div className="relative group">
-            <Link to={`/profile/${user.id}`}>
+            <Link to={`/user/profile/${user.id}`}>
               <motion.div
                 whileHover={{ scale: 1.12 }}
                 transition={{ type: "spring", stiffness: 300 }}
@@ -310,7 +314,7 @@ const FriendsSuggestion = () => {
           </div>
 
           <div className="flex flex-col">
-            <Link to={`/profile/${user.id}`} className="group">
+            <Link to={`/user/profile/${user.id}`} className="group">
               <h3 className="font-bold text-gray-800 group-hover:text-blue-600 transition-colors text-lg">
                 {user.fullName || 'Unknown User'}
               </h3>
@@ -687,7 +691,7 @@ const FriendsSuggestion = () => {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Link
-                        to={`/profile/${selectedUser.id}`}
+                        to={`/user/profile/${selectedUser.id}`}
                         className="px-5 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors flex items-center shadow-md"
                       >
                         <FiEye className="mr-2" /> View Profile
