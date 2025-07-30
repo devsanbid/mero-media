@@ -12,7 +12,7 @@ import {
 
 const FriendRequestButton = ({ targetUserId, targetUser }) => {
   const dispatch = useDispatch();
-  const { userDetails } = useSelector((state) => state.auth);
+  const { user: userDetails } = useSelector((state) => state.auth);
   const { sentRequests, receivedRequests, friends, isLoading } = useSelector(
     (state) => state.friendRequests
   );

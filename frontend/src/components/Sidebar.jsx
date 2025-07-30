@@ -25,12 +25,7 @@ const Sidebar = ({ isSidebar }) => {
     setIsClient(true);
   }, []);
 
-  useEffect(() => {
-    if (isLoggedIn && !userDetails && !loading) {
-      console.log('Fetching user details from Sidebar');
-      dispatch(fetchUserDetails());
-    }
-  }, [dispatch, isLoggedIn, userDetails, loading]);
+  // Remove duplicate fetchUserDetails call - handled by Layout component
 
   useEffect(() => {
     console.log('Sidebar - isLoggedIn:', isLoggedIn, 'userDetails:', userDetails, 'loading:', loading);
@@ -145,7 +140,7 @@ const Sidebar = ({ isSidebar }) => {
 
             <nav className="flex-1 py-4 px-3">
               <ul className="space-y-2 overflow-hidden">
-                {menuItems.map((item, index) => {
+                {menuItems.filter(item => !item.adminOnly || userDetails?.role === 'admin').map((item, index) => {
                   const isActive = location.pathname === item.href || (item.myProfile && location.pathname.includes('/profile'));
                   return (
                     <motion.li
@@ -377,6 +372,12 @@ const menuItems = [
     label: 'Explore',
     href: '/user/explore',
     iconSrc: 'https://cdn-icons-png.flaticon.com/512/2811/2811806.png',
+  },
+  {
+    label: 'Admin Panel',
+    href: '/admin',
+    iconSrc: 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+    adminOnly: true,
   },
 ];
 

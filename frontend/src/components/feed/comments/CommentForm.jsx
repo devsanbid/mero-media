@@ -8,7 +8,7 @@ import EmojiPicker from 'emoji-picker-react';
 
 const CommentForm = ({ postId, onCommentAdded }) => {
   const dispatch = useDispatch();
-  const { userDetails } = useSelector((state) => state.auth);
+  const { user: userDetails } = useSelector((state) => state.auth);
   const { isLoading } = useSelector((state) => state.comments);
 
   const [content, setContent] = useState('');
@@ -24,7 +24,7 @@ const CommentForm = ({ postId, onCommentAdded }) => {
     if (!content.trim() || isLoading) return;
 
     try {
-      const result = await dispatch(postComment({ postId, content: content.trim() }));
+      const result = await dispatch(postComment({ post: postId, content: content.trim() }));
       if (result.type === 'comments/postComment/fulfilled') {
         setContent('');
         if (onCommentAdded) {

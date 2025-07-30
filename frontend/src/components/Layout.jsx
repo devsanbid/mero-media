@@ -11,7 +11,7 @@ import LoadingSpinner from './LoadingSpinner';
 
 const Layout = () => {
   const dispatch = useDispatch();
-  const { isLoggedIn, loading } = useSelector((state) => state.auth);
+  const { isLoggedIn, loading, user } = useSelector((state) => state.auth);
   const [isSidebar, setIsSidebar] = useState(false);
 
   const toggleSidebar = () => {
@@ -20,12 +20,12 @@ const Layout = () => {
 
   useEffect(() => {
     const token = localStorage.getItem('auth-token');
-    console.log('Layout - token:', !!token, 'isLoggedIn:', isLoggedIn);
-    if (token && !isLoggedIn) {
+    console.log('Layout - token:', !!token, 'isLoggedIn:', isLoggedIn, 'user:', !!user);
+    if (token && (!isLoggedIn || !user) && !loading) {
       console.log('Fetching user details from Layout');
       dispatch(fetchUserDetails());
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isLoggedIn, user, loading]);
 
   useEffect(() => {
     console.log('Layout - Auth state changed:', { isLoggedIn, loading });

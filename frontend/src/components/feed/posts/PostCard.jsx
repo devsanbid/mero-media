@@ -18,6 +18,7 @@ import { getImageUrl } from "../../../constants";
 import EditPostModal from './EditPostModal';
 import InteractionButtons from './InteractionButtons';
 import CommentForm from '../comments/CommentForm';
+import CommentItem from '../comments/CommentItem';
 
 const PostCard = ({ post }) => {
   const [showFullContent, setShowFullContent] = useState(false);
@@ -29,7 +30,7 @@ const PostCard = ({ post }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { isLoggedIn, userDetails } = useSelector((state) => state.auth);
+  const { isLoggedIn, user: userDetails } = useSelector((state) => state.auth);
   const { commentsByPostId } = useSelector((state) => state.comments);
   
   // Get comments for this specific post
@@ -298,26 +299,11 @@ const PostCard = ({ post }) => {
               <div className="space-y-3">
                 {postComments.length > 0 ? (
                   postComments.map((comment) => (
-                    <div key={comment.id} className="flex space-x-3">
-                      <img
-                        src={getImageUrl(comment.user?.profilePicture) || '/default-avatar.png'}
-                        alt={comment.user?.fullName || 'User'}
-                        className="w-8 h-8 rounded-full object-cover"
-                      />
-                      <div className="flex-1">
-                        <div className="bg-white rounded-lg p-3 border border-gray-200">
-                          <div className="flex items-center space-x-2 mb-1">
-                            <span className="font-medium text-sm text-gray-900">
-                              {comment.user?.fullName || 'Unknown User'}
-                            </span>
-                            <span className="text-xs text-gray-500">
-                              {timeAgo ? timeAgo(comment.createdAt) : 'Just now'}
-                            </span>
-                          </div>
-                          <p className="text-sm text-gray-700">{comment.content}</p>
-                        </div>
-                      </div>
-                    </div>
+                    <CommentItem
+                      key={comment.id}
+                      comment={comment}
+                      postId={post.id}
+                    />
                   ))
                 ) : (
                   <div className="text-center text-gray-500 text-sm py-4">

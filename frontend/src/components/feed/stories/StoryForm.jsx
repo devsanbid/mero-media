@@ -25,7 +25,7 @@ const StoryForm = ({ isOpen, onClose, storyToast }) => {
   const [showSuccessIndicator, setShowSuccessIndicator] = useState(false);
   
   const { isLoading, error } = useSelector((state) => state.story);
-  const { userDetails } = useSelector((state) => state.auth);
+  const { user: userDetails } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (isOpen) {
