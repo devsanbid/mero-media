@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import LandingPage from './pages/LandingPage';
 import Home from './pages/user/Home';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -33,6 +34,7 @@ function App() {
       <Router>
         <div className="min-h-screen bg-[#F5F6FA]">
           <Routes>
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 

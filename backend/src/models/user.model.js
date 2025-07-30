@@ -89,6 +89,28 @@ const User = sequelize.define('User', {
       },
     },
   },
+  followers: {
+    type: DataTypes.JSON,
+    defaultValue: [],
+  },
+  following: {
+    type: DataTypes.JSON,
+    defaultValue: [],
+  },
+  website: {
+    type: DataTypes.STRING(255),
+    allowNull: true,
+    validate: {
+      isUrl: {
+        msg: 'Please enter a valid URL'
+      }
+    },
+  },
+  role: {
+    type: DataTypes.ENUM('user', 'admin'),
+    defaultValue: 'user',
+    allowNull: false,
+  },
 }, {
   timestamps: true,
   tableName: 'users',

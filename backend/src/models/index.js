@@ -8,6 +8,7 @@ import { SavedItem } from './saves.model.js';
 import { PostLike } from './postLikes.model.js';
 import { CommentLike } from './commentLikes.model.js';
 import { UserFriend } from './userFriends.model.js';
+import { UserFollow } from './userFollow.model.js';
 
 User.hasMany(Post, { foreignKey: 'userId', as: 'posts' });
 Post.belongsTo(User, { foreignKey: 'userId', as: 'user' });
@@ -51,6 +52,11 @@ User.hasMany(UserFriend, { foreignKey: 'friendId', as: 'friendOf' });
 UserFriend.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 UserFriend.belongsTo(User, { foreignKey: 'friendId', as: 'friend' });
 
+User.hasMany(UserFollow, { foreignKey: 'followerId', as: 'followingRelations' });
+User.hasMany(UserFollow, { foreignKey: 'followingId', as: 'followerRelations' });
+UserFollow.belongsTo(User, { foreignKey: 'followerId', as: 'follower' });
+UserFollow.belongsTo(User, { foreignKey: 'followingId', as: 'followedUser' });
+
 export {
   User,
   Post,
@@ -61,5 +67,6 @@ export {
   SavedItem,
   PostLike,
   CommentLike,
-  UserFriend
+  UserFriend,
+  UserFollow
 };

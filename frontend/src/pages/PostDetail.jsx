@@ -18,6 +18,7 @@ import { getImageUrl } from '../constants';
 import { formatText } from '../utility/textFormatter';
 import LoadingSpinner from '../components/LoadingSpinner';
 import EditPostModal from '../components/feed/posts/EditPostModal';
+import CommentItem from '../components/feed/comments/CommentItem';
 
 const PostDetail = () => {
   const { postId } = useParams();
@@ -30,7 +31,7 @@ const PostDetail = () => {
   
   const { posts, loading, error } = useSelector((state) => state.posts);
   const { commentsByPostId } = useSelector((state) => state.comments);
-  const { isLoggedIn, userDetails } = useSelector((state) => state.auth);
+  const { isLoggedIn, user: userDetails } = useSelector((state) => state.auth);
   
   // Find the specific post
   const post = posts.find(p => p.id === postId);
@@ -286,37 +287,11 @@ const PostDetail = () => {
             <div className="space-y-4">
               {postComments.length > 0 ? (
                 postComments.map((comment) => (
-                  <motion.div
-                    key={comment.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex space-x-3 p-4 bg-gray-50 rounded-lg"
-                  >
-                    <img
-                      src={getImageUrl(comment.user?.profilePicture) || '/default-avatar.png'}
-                      alt={comment.user?.fullName || 'User'}
-                      className="w-10 h-10 rounded-full object-cover cursor-pointer"
-                      onClick={() => navigate(`/user/profile/${comment.user?.id}`)}
-                    />
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <span
-                          className="font-medium text-gray-900 cursor-pointer hover:text-blue-600 transition-colors"
-                          onClick={() => navigate(`/user/profile/${comment.user?.id}`)}
-                        >
-                          {comment.user?.fullName || 'Unknown User'}
-                        </span>
-                        <span className="text-sm text-gray-500">
-                          @{comment.user?.username}
-                        </span>
-                        <span className="text-sm text-gray-500">•</span>
-                        <span className="text-sm text-gray-500">
-                          {timeAgo ? timeAgo(comment.createdAt) : 'Just now'}
-                        </span>
-                      </div>
-                      <p className="text-gray-700 leading-relaxed">{comment.content}</p>
-                    </div>
-                  </motion.div>
+                  <CommentItem 
+                    key={comment.id} 
+                    comment={comment} 
+                    postId={postId}
+                  />
                 ))
               ) : (
                 <div className="text-center text-gray-500 py-8">

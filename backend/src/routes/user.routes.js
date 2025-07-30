@@ -1,6 +1,7 @@
 // user.routes.js
 import express from 'express';
 import { fetchUser } from '../middleware/fetchUser.js';
+import upload from '../middleware/upload.js';
 import {
   registerUser,
   getUserDetails,
@@ -28,6 +29,9 @@ router.get('/userDetails/:userId', userDetails);
 router.get('/', getAllUsers);
 
 // Route to update the user profile
-router.put('/update', fetchUser, updateUser); 
+router.put('/update', fetchUser, upload.fields([
+  { name: 'profilePicture', maxCount: 1 },
+  { name: 'coverImage', maxCount: 1 }
+]), updateUser); 
 
 export default router;
