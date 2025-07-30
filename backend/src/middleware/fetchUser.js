@@ -7,7 +7,7 @@ const fetchUser = async (req, res, next) => {
          return res.status(401).send({error: "Pls authenticate using a valid token"});
       }
       const data = await jwt.verify(authToken, process.env.JWT_SECRET);
-      req.user = data
+      req.user = data;
       next();
    } catch (error) {
       return res.status(401).send({error: "Pls authenticate using a valid token"});
