@@ -5,7 +5,6 @@ import AuthRedirect from "../../components/AuthRedirect";
 import PostForm from "../../components/feed/posts/PostForm";
 import PostList from "../../components/feed/posts/PostList";
 import { BsFillPostcardFill } from "react-icons/bs";
-import StorySection from "../../components/feed/stories/StorySection";
 import RunningServer from "../../components/RunningServer";
 import axios from "axios";
 import { ProfilePicVerify } from "../../components";
@@ -43,7 +42,6 @@ export default function Posts() {
     <AuthRedirect>
       <main className="bg-[#F5F6FA] mx-auto space-y-3 w-full min-h-screen">
         <ProfilePicVerify />
-        <StorySection />
         <PostForm />
         {allPosts.length > 0 ? (
           <PostList posts={allPosts} />

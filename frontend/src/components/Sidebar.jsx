@@ -363,12 +363,6 @@ const menuItems = [
     iconSrc: 'https://cdn-icons-png.flaticon.com/256/5509/5509446.png',
   },
   {
-    label: 'Stories',
-    href: '/user/stories',
-    iconSrc: 'https://res.cloudinary.com/datvbo0ey/image/upload/v1726328461/social-media-post-3d-icon-download-in-png-blend-fbx-gltf-file-formats--like-logo-user-network-miscellaneous-pack-icons-5753373_imunlr.png',
-    isNew: true,
-  },
-  {
     label: 'Explore',
     href: '/user/explore',
     iconSrc: 'https://cdn-icons-png.flaticon.com/512/2811/2811806.png',

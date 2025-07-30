@@ -4,7 +4,7 @@ import { fetchDashboardStats } from '../../redux/admin/adminSlice';
 import DashboardOverview from '../../components/admin/DashboardOverview';
 import UserManagement from '../../components/admin/UserManagement';
 import PostManagement from '../../components/admin/PostManagement';
-import { FiUsers, FiFileText, FiBarChart3, FiSettings } from 'react-icons/fi';
+import { FiUsers, FiFileText, FiSettings } from 'react-icons/fi';
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -19,7 +19,7 @@ const Admin = () => {
   }, [dispatch, user]);
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: FiBarChart3, color: 'blue' },
+    { id: 'overview', label: 'Overview', icon: FiUsers, color: 'blue' },
     { id: 'users', label: 'User Management', icon: FiUsers, color: 'green' },
     { id: 'posts', label: 'Post Management', icon: FiFileText, color: 'purple' },
     { id: 'settings', label: 'Settings', icon: FiSettings, color: 'gray' },
@@ -74,11 +74,10 @@ const Admin = () => {
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm transition-colors ${
-                    isActive
+                  className={`flex items-center space-x-2 py-4 px-2 border-b-2 font-medium text-sm transition-colors ${isActive
                       ? `border-${tab.color}-500 text-${tab.color}-600`
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
+                    }`}
                 >
                   <Icon className="w-5 h-5" />
                   <span>{tab.label}</span>

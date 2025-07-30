@@ -13,7 +13,6 @@ export { default as RunningServer } from './RunningServer';
 
 // Feed components
 export { default as PostList } from './feed/posts/PostList';
-export { default as StorySection } from './feed/stories/StorySection';
 
 // User profile components
 export { default as ProfilePicVerify } from './userProfile/ProfilePicVerify';

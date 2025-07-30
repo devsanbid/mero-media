@@ -4,7 +4,6 @@ import { getAllPosts } from "../../redux/posts/postsSlice";
 import PostForm from "../../components/feed/posts/PostForm";
 import PostList from "../../components/feed/posts/PostList";
 import { BsFillPostcardFill } from "react-icons/bs";
-import StorySection from "../../components/feed/stories/StorySection";
 import RunningServer from "../../components/RunningServer";
 import axios from "axios";
 import { ProfilePicVerify } from "../../components";
@@ -43,7 +42,6 @@ export default function Home() {
   return (
     <main className="bg-[#F5F6FA] mx-auto space-y-3 w-full min-h-screen">
       <ProfilePicVerify />
-      <StorySection />
       <PostForm />
       {postsLoading ? (
         <div className="flex flex-col items-center justify-center text-center p-10">

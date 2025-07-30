@@ -13,7 +13,6 @@ import Profile from './pages/user/Profile';
 import Settings from './pages/user/Settings';
 import Friends from './pages/user/Friends';
 import Bookmarks from './pages/user/Bookmarks';
-import Stories from './pages/user/Stories';
 import Explore from './pages/user/Explore';
 import People from './pages/user/People';
 import Posts from './pages/user/Posts';
@@ -23,7 +22,6 @@ import SentRequests from './pages/user/SentRequests';
 import Contact from './pages/user/Contact';
 import Hashtags from './pages/user/Hashtags';
 import Trending from './pages/user/Trending';
-import StoryDetail from './pages/user/StoryDetail';
 import MyPosts from './pages/user/MyPosts';
 import User from './pages/user/User';
 import Admin from './pages/admin/Admin';
@@ -46,8 +44,6 @@ function App() {
               <Route path="settings" element={<Settings />} />
               <Route path="friends" element={<Friends />} />
               <Route path="bookmarks" element={<Bookmarks />} />
-              <Route path="stories" element={<Stories />} />
-              <Route path="story/:storyId" element={<StoryDetail />} />
               <Route path="explore" element={<Explore />} />
               <Route path="people" element={<People />} />
               <Route path="posts" element={<Posts />} />
