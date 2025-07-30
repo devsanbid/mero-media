@@ -7,6 +7,8 @@ import commentsReducer  from './comments/commentsSlice';
 import savedItemsReducer  from './savedItems/savedItemsSlice';
 import storyReducer  from './story/storySlice';
 import notificationsReducer  from './notifications/notificationsSlice';
+import followReducer from './follow/followSlice';
+import adminReducer from './admin/adminSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ export const store = configureStore({
     savedItems: savedItemsReducer,
     story: storyReducer,
     notifications: notificationsReducer,
+    follow: followReducer,
+    admin: adminReducer,
   },
 });
 
