@@ -108,7 +108,7 @@ const UserManagement = () => {
         </div>
 
         {/* Filters */}
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="mt-4 lg:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
           <div className="relative">
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
@@ -116,13 +116,13 @@ const UserManagement = () => {
               placeholder="Search users..."
               value={searchTerm}
               onChange={handleSearch}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-3 py-2 lg:pr-4 lg:py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
           <select
             value={roleFilter}
             onChange={handleRoleFilter}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="px-3 py-2 lg:px-4 lg:py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">All Roles</option>
             <option value="user">Users</option>
@@ -144,25 +144,25 @@ const UserManagement = () => {
         </div>
       )}
 
-      {/* Users Table */}
-      <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+      {/* Users Table - Desktop */}
+      <div className="hidden md:block bg-white rounded-lg shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   User
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Role
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Verified
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Joined
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-4 lg:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -171,28 +171,28 @@ const UserManagement = () => {
               {usersLoading ? (
                 [...Array(5)].map((_, index) => (
                   <tr key={index}>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 bg-gray-200 rounded-full animate-pulse"></div>
-                        <div className="ml-4">
-                          <div className="h-4 bg-gray-200 rounded w-24 animate-pulse"></div>
-                          <div className="h-3 bg-gray-200 rounded w-32 mt-1 animate-pulse"></div>
+                        <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gray-200 rounded-full animate-pulse"></div>
+                        <div className="ml-3 lg:ml-4">
+                          <div className="h-3 lg:h-4 bg-gray-200 rounded w-20 lg:w-24 animate-pulse"></div>
+                          <div className="h-2 lg:h-3 bg-gray-200 rounded w-24 lg:w-32 mt-1 animate-pulse"></div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="h-4 bg-gray-200 rounded w-16 animate-pulse"></div>
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
+                      <div className="h-3 lg:h-4 bg-gray-200 rounded w-12 lg:w-16 animate-pulse"></div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="h-4 bg-gray-200 rounded w-12 animate-pulse"></div>
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
+                      <div className="h-3 lg:h-4 bg-gray-200 rounded w-8 lg:w-12 animate-pulse"></div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
+                      <div className="h-3 lg:h-4 bg-gray-200 rounded w-16 lg:w-20 animate-pulse"></div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right">
-                      <div className="flex justify-end space-x-2">
-                        <div className="h-8 w-8 bg-gray-200 rounded animate-pulse"></div>
-                        <div className="h-8 w-8 bg-gray-200 rounded animate-pulse"></div>
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-right">
+                      <div className="flex justify-end space-x-1 lg:space-x-2">
+                        <div className="h-6 w-6 lg:h-8 lg:w-8 bg-gray-200 rounded animate-pulse"></div>
+                        <div className="h-6 w-6 lg:h-8 lg:w-8 bg-gray-200 rounded animate-pulse"></div>
                       </div>
                     </td>
                   </tr>
@@ -200,27 +200,27 @@ const UserManagement = () => {
               ) : (
                 users.map((user) => (
                   <tr key={user.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
                       <div className="flex items-center">
-                        <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                          <span className="text-sm font-medium text-gray-600">
+                        <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                          <span className="text-xs lg:text-sm font-medium text-gray-600">
                             {user.firstName?.charAt(0) || 'U'}
                           </span>
                         </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
+                        <div className="ml-3 lg:ml-4 min-w-0 flex-1">
+                          <div className="text-xs lg:text-sm font-medium text-gray-900 truncate">
                             {user.firstName} {user.lastName}
                           </div>
-                          <div className="text-sm text-gray-500">{user.email}</div>
+                          <div className="text-xs lg:text-sm text-gray-500 truncate">{user.email}</div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
                       {editingUser === user.id ? (
                         <select
                           value={user.role}
                           onChange={(e) => handleUpdateRole(user.id, e.target.value)}
-                          className="text-sm border border-gray-300 rounded px-2 py-1"
+                          className="text-xs lg:text-sm border border-gray-300 rounded px-2 py-1"
                         >
                           <option value="user">User</option>
                           <option value="admin">Admin</option>
@@ -237,7 +237,7 @@ const UserManagement = () => {
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
                       <button
                         onClick={() => handleToggleVerification(user.id)}
                         className={`p-1 rounded-full ${
@@ -246,25 +246,25 @@ const UserManagement = () => {
                             : 'bg-gray-100 text-gray-400'
                         }`}
                       >
-                        {user.isDpVerify ? <FiCheck className="w-4 h-4" /> : <FiX className="w-4 h-4" />}
+                        {user.isDpVerify ? <FiCheck className="w-3 h-3 lg:w-4 lg:h-4" /> : <FiX className="w-3 h-3 lg:w-4 lg:h-4" />}
                       </button>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-xs lg:text-sm text-gray-500">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end space-x-2">
+                    <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex justify-end space-x-1 lg:space-x-2">
                         <button
                           onClick={() => setEditingUser(editingUser === user.id ? null : user.id)}
                           className="text-blue-600 hover:text-blue-900 p-1"
                         >
-                          <FiEdit className="w-4 h-4" />
+                          <FiEdit className="w-3 h-3 lg:w-4 lg:h-4" />
                         </button>
                         <button
                           onClick={() => handleDeleteUser(user.id)}
                           className="text-red-600 hover:text-red-900 p-1"
                         >
-                          <FiTrash2 className="w-4 h-4" />
+                          <FiTrash2 className="w-3 h-3 lg:w-4 lg:h-4" />
                         </button>
                       </div>
                     </td>
@@ -273,75 +273,195 @@ const UserManagement = () => {
               )}
             </tbody>
           </table>
-        </div>
+  </div>
+      </div>
 
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200">
-            <div className="flex-1 flex justify-between sm:hidden">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm text-gray-700">
-                  Showing <span className="font-medium">{(currentPage - 1) * 10 + 1}</span> to{' '}
-                  <span className="font-medium">
-                    {Math.min(currentPage * 10, totalUsers)}
-                  </span>{' '}
-                  of <span className="font-medium">{totalUsers}</span> results
-                </p>
+      {/* Users Cards - Mobile */}
+      <div className="md:hidden space-y-4">
+        {usersLoading ? (
+          [...Array(5)].map((_, index) => (
+            <div key={index} className="bg-white rounded-lg shadow-sm p-4">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-12 h-12 bg-gray-200 rounded-full animate-pulse"></div>
+                <div className="flex-1">
+                  <div className="h-4 bg-gray-200 rounded w-24 animate-pulse mb-1"></div>
+                  <div className="h-3 bg-gray-200 rounded w-32 animate-pulse"></div>
+                </div>
               </div>
-              <div>
-                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-                  <button
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
-                  >
-                    <FiChevronLeft className="w-5 h-5" />
-                  </button>
-                  {[...Array(totalPages)].map((_, index) => {
-                    const page = index + 1;
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => handlePageChange(page)}
-                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
-                          currentPage === page
-                            ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  })}
-                  <button
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
-                  >
-                    <FiChevronRight className="w-5 h-5" />
-                  </button>
-                </nav>
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <div className="h-3 bg-gray-200 rounded w-12 animate-pulse mb-1"></div>
+                  <div className="h-4 bg-gray-200 rounded w-16 animate-pulse"></div>
+                </div>
+                <div>
+                  <div className="h-3 bg-gray-200 rounded w-16 animate-pulse mb-1"></div>
+                  <div className="h-4 bg-gray-200 rounded w-20 animate-pulse"></div>
+                </div>
+              </div>
+              <div className="flex justify-between items-center mt-4">
+                <div className="h-6 bg-gray-200 rounded w-16 animate-pulse"></div>
+                <div className="flex space-x-2">
+                  <div className="h-8 w-8 bg-gray-200 rounded animate-pulse"></div>
+                  <div className="h-8 w-8 bg-gray-200 rounded animate-pulse"></div>
+                </div>
               </div>
             </div>
-          </div>
+          ))
+        ) : (
+          users.map((user) => (
+            <div key={user.id} className="bg-white rounded-lg shadow-sm p-4">
+              <div className="flex items-center space-x-3 mb-3">
+                <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-medium text-gray-600">
+                    {user.firstName?.charAt(0) || 'U'}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium text-gray-900 truncate">
+                    {user.firstName} {user.lastName}
+                  </div>
+                  <div className="text-sm text-gray-500 truncate">{user.email}</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-3 text-sm mb-4">
+                <div>
+                  <span className="text-gray-500 block mb-1">Role</span>
+                  {editingUser === user.id ? (
+                    <select
+                      value={user.role}
+                      onChange={(e) => handleUpdateRole(user.id, e.target.value)}
+                      className="text-sm border border-gray-300 rounded px-2 py-1 w-full"
+                    >
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  ) : (
+                    <span
+                      className={`inline-block px-2 py-1 text-xs rounded-full ${
+                        user.role === 'admin'
+                          ? 'bg-red-100 text-red-800'
+                          : 'bg-blue-100 text-blue-800'
+                      }`}
+                    >
+                      {user.role}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <span className="text-gray-500 block mb-1">Joined</span>
+                  <span className="text-gray-900">
+                    {new Date(user.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+              
+              <div className="flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <span className="text-gray-500 text-sm">Verified:</span>
+                  <button
+                    onClick={() => handleToggleVerification(user.id)}
+                    className={`p-1 rounded-full ${
+                      user.isDpVerify
+                        ? 'bg-green-100 text-green-600'
+                        : 'bg-gray-100 text-gray-400'
+                    }`}
+                  >
+                    {user.isDpVerify ? <FiCheck className="w-4 h-4" /> : <FiX className="w-4 h-4" />}
+                  </button>
+                </div>
+                <div className="flex space-x-2">
+                  <button
+                    onClick={() => setEditingUser(editingUser === user.id ? null : user.id)}
+                    className="text-blue-600 hover:text-blue-900 p-2 rounded-full hover:bg-blue-50"
+                  >
+                    <FiEdit className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteUser(user.id)}
+                    className="text-red-600 hover:text-red-900 p-2 rounded-full hover:bg-red-50"
+                  >
+                    <FiTrash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
         )}
       </div>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="bg-white px-4 py-3 rounded-lg shadow-sm mt-4">
+          {/* Mobile Pagination */}
+          <div className="flex items-center justify-between sm:hidden">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="relative inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span className="text-sm text-gray-700">
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="relative inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+          
+          {/* Desktop Pagination */}
+          <div className="hidden sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm text-gray-700">
+                Showing <span className="font-medium">{(currentPage - 1) * 10 + 1}</span> to{' '}
+                <span className="font-medium">
+                  {Math.min(currentPage * 10, totalUsers)}
+                </span>{' '}
+                of <span className="font-medium">{totalUsers}</span> results
+              </p>
+            </div>
+            <div>
+              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                <button
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                >
+                  <FiChevronLeft className="w-5 h-5" />
+                </button>
+                {[...Array(totalPages)].map((_, index) => {
+                  const page = index + 1;
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                        currentPage === page
+                          ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
+                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
+                >
+                  <FiChevronRight className="w-5 h-5" />
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Create Admin Modal */}
       {showCreateModal && (
