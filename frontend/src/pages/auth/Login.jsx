@@ -12,7 +12,7 @@ import { IoLogoGithub } from "react-icons/io5";
 export default function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -24,7 +24,12 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate("/user/home");
+      // Redirect based on user role
+      if (user?.role === 'admin') {
+        navigate("/admin");
+      } else {
+        navigate("/user/home");
+      }
     }
     
     const interval = setInterval(() => {
@@ -37,7 +42,7 @@ export default function LoginPage() {
     }, 3000);
     
     return () => clearInterval(interval);
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, user, navigate]);
 
   const validate = () => {
     let errors = {};
@@ -79,9 +84,20 @@ export default function LoginPage() {
 
       localStorage.setItem("auth-token", response.data.data.token);
 
-      dispatch(setLoggedIn(true, response.data.data.token));
+      // Create a user object with the role information
+      const user = {
+        role: response.data.data.role
+      };
 
-      navigate("/user/home");
+      // Pass both token and user object to setLoggedIn
+      dispatch(setLoggedIn({ token: response.data.data.token, user }));
+
+      // Redirect based on user role
+      if (response.data.data.role === 'admin') {
+        navigate("/admin");
+      } else {
+        navigate("/user/home");
+      }
     } catch (error) {
       console.error("Login failed:", error.response?.data?.message);
       setErrors({ general: error.response?.data?.message || "Invalid credentials" });
