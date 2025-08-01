@@ -1,12 +1,12 @@
 import bcrypt from 'bcryptjs';
 import { User } from '../models/index.js';
-import { connectDB } from '../config/database.js';
+import connectToDatabase from '../db/index.js';
 
 // Create admin user script
 const createAdminUser = async () => {
   try {
     // Connect to database
-    await connectDB();
+    await connectToDatabase();
     
     // Check if admin already exists
     const existingAdmin = await User.findOne({ 
