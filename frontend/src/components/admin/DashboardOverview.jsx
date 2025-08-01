@@ -4,12 +4,12 @@ import { FiUsers, FiFileText, FiHeart, FiMessageCircle, FiTrendingUp, FiUserChec
 const DashboardOverview = ({ stats, loading }) => {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="bg-white rounded-lg shadow-sm p-6 animate-pulse">
-            <div className="h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
-            <div className="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
-            <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+          <div key={index} className="bg-white rounded-lg shadow-sm p-4 lg:p-6 animate-pulse">
+            <div className="h-3 lg:h-4 bg-gray-200 rounded w-1/2 mb-2"></div>
+            <div className="h-6 lg:h-8 bg-gray-200 rounded w-1/3 mb-3 lg:mb-4"></div>
+            <div className="h-2 lg:h-3 bg-gray-200 rounded w-3/4"></div>
           </div>
         ))}
       </div>
@@ -77,27 +77,27 @@ const DashboardOverview = ({ stats, loading }) => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {statCards.map((stat, index) => {
           const Icon = stat.icon;
           return (
-            <div key={index} className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+            <div key={index} className="bg-white rounded-lg shadow-sm p-4 lg:p-6 hover:shadow-md transition-shadow">
               <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                  <p className="text-3xl font-bold text-gray-900 mt-1">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs lg:text-sm font-medium text-gray-600 truncate">{stat.title}</p>
+                  <p className="text-2xl lg:text-3xl font-bold text-gray-900 mt-1">
                     {formatNumber(stat.value)}
                   </p>
-                  <p className="text-sm text-gray-500 mt-1">{stat.description}</p>
+                  <p className="text-xs lg:text-sm text-gray-500 mt-1 truncate">{stat.description}</p>
                 </div>
-                <div className={`p-3 rounded-full bg-${stat.color}-100`}>
-                  <Icon className={`w-6 h-6 text-${stat.color}-600`} />
+                <div className={`p-2 lg:p-3 rounded-full bg-${stat.color}-100 flex-shrink-0 ml-3`}>
+                  <Icon className={`w-5 h-5 lg:w-6 lg:h-6 text-${stat.color}-600`} />
                 </div>
               </div>
-              <div className="mt-4 flex items-center">
-                <span className="text-sm font-medium text-green-600">{stat.trend}</span>
+              <div className="mt-3 lg:mt-4 flex items-center">
+                <span className="text-xs lg:text-sm font-medium text-green-600">{stat.trend}</span>
                 <span className="text-sm text-gray-500 ml-1">from last month</span>
               </div>
             </div>
