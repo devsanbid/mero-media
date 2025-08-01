@@ -6,7 +6,7 @@ import {
   setPostsCurrentPage,
   clearError
 } from '../../redux/admin/adminSlice';
-import { FiSearch, FiTrash2, FiEye, FiHeart, FiMessageCircle, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiSearch, FiTrash2, FiEye, FiHeart, FiMessageCircle, FiChevronLeft, FiChevronRight, FiFileText } from 'react-icons/fi';
 
 const PostManagement = () => {
   const dispatch = useDispatch();
@@ -57,18 +57,18 @@ const PostManagement = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 lg:space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm p-6">
+      <div className="bg-white rounded-lg shadow-sm p-4 lg:p-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="text-xl font-bold text-gray-800">Post Management</h2>
-            <p className="text-gray-600 mt-1">Manage all posts in the system</p>
+            <h2 className="text-lg lg:text-xl font-bold text-gray-800">Post Management</h2>
+            <p className="text-sm lg:text-base text-gray-600 mt-1">Manage all posts in the system</p>
           </div>
         </div>
 
         {/* Search */}
-        <div className="mt-6">
+        <div className="mt-4 lg:mt-6">
           <div className="relative max-w-md">
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
             <input
@@ -76,7 +76,7 @@ const PostManagement = () => {
               placeholder="Search posts..."
               value={searchTerm}
               onChange={handleSearch}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-3 py-2 lg:pr-4 lg:py-2 text-sm lg:text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
         </div>
@@ -96,28 +96,28 @@ const PostManagement = () => {
       )}
 
       {/* Posts Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {postsLoading ? (
           [...Array(6)].map((_, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-sm p-6 animate-pulse">
+            <div key={index} className="bg-white rounded-lg shadow-sm p-4 lg:p-6 animate-pulse">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
+                <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gray-200 rounded-full"></div>
                 <div className="flex-1">
-                  <div className="h-4 bg-gray-200 rounded w-24"></div>
-                  <div className="h-3 bg-gray-200 rounded w-32 mt-1"></div>
+                  <div className="h-3 lg:h-4 bg-gray-200 rounded w-20 lg:w-24"></div>
+                  <div className="h-2 lg:h-3 bg-gray-200 rounded w-24 lg:w-32 mt-1"></div>
                 </div>
               </div>
-              <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
-              <div className="h-32 bg-gray-200 rounded mb-4"></div>
+              <div className="h-3 lg:h-4 bg-gray-200 rounded w-full mb-2"></div>
+              <div className="h-3 lg:h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+              <div className="h-24 lg:h-32 bg-gray-200 rounded mb-4"></div>
               <div className="flex justify-between items-center">
-                <div className="flex space-x-4">
-                  <div className="h-4 bg-gray-200 rounded w-12"></div>
-                  <div className="h-4 bg-gray-200 rounded w-12"></div>
+                <div className="flex space-x-3 lg:space-x-4">
+                  <div className="h-3 lg:h-4 bg-gray-200 rounded w-10 lg:w-12"></div>
+                  <div className="h-3 lg:h-4 bg-gray-200 rounded w-10 lg:w-12"></div>
                 </div>
-                <div className="flex space-x-2">
-                  <div className="h-8 w-8 bg-gray-200 rounded"></div>
-                  <div className="h-8 w-8 bg-gray-200 rounded"></div>
+                <div className="flex space-x-1 lg:space-x-2">
+                  <div className="h-6 w-6 lg:h-8 lg:w-8 bg-gray-200 rounded"></div>
+                  <div className="h-6 w-6 lg:h-8 lg:w-8 bg-gray-200 rounded"></div>
                 </div>
               </div>
             </div>
@@ -126,15 +126,15 @@ const PostManagement = () => {
           posts.map((post) => (
             <div key={post.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
               {/* Post Header */}
-              <div className="p-4 border-b border-gray-100">
+              <div className="p-3 lg:p-4 border-b border-gray-100">
                 <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
-                    <span className="text-sm font-medium text-gray-600">
+                  <div className="w-8 h-8 lg:w-10 lg:h-10 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-xs lg:text-sm font-medium text-gray-600">
                       {post.user?.firstName?.charAt(0) || 'U'}
                     </span>
                   </div>
-                  <div className="flex-1">
-                    <div className="text-sm font-medium text-gray-900">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs lg:text-sm font-medium text-gray-900 truncate">
                       {post.user?.firstName} {post.user?.lastName}
                     </div>
                     <div className="text-xs text-gray-500">
@@ -145,8 +145,8 @@ const PostManagement = () => {
               </div>
 
               {/* Post Content */}
-              <div className="p-4">
-                <p className="text-gray-800 text-sm mb-3">
+              <div className="p-3 lg:p-4">
+                <p className="text-gray-800 text-xs lg:text-sm mb-3 line-clamp-3">
                   {truncateText(post.content || '', 100)}
                 </p>
 
@@ -156,37 +156,37 @@ const PostManagement = () => {
                     <img
                       src={post.image}
                       alt="Post content"
-                      className="w-full h-32 object-cover rounded-lg"
+                      className="w-full h-24 lg:h-32 object-cover rounded-lg"
                     />
                   </div>
                 )}
 
                 {/* Post Stats */}
-                <div className="flex items-center justify-between text-sm text-gray-500">
-                  <div className="flex space-x-4">
+                <div className="flex items-center justify-between text-xs lg:text-sm text-gray-500">
+                  <div className="flex space-x-3 lg:space-x-4">
                     <div className="flex items-center space-x-1">
-                      <FiHeart className="w-4 h-4" />
+                      <FiHeart className="w-3 h-3 lg:w-4 lg:h-4" />
                       <span>{post.likes?.length || 0}</span>
                     </div>
                     <div className="flex items-center space-x-1">
-                      <FiMessageCircle className="w-4 h-4" />
+                      <FiMessageCircle className="w-3 h-3 lg:w-4 lg:h-4" />
                       <span>{post.comments?.length || 0}</span>
                     </div>
                   </div>
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-1 lg:space-x-2">
                     <button
                       onClick={() => handleViewPost(post)}
-                      className="p-1 text-blue-600 hover:text-blue-800 transition-colors"
+                      className="p-1 lg:p-2 text-blue-600 hover:text-blue-800 transition-colors rounded-full hover:bg-blue-50"
                       title="View Post"
                     >
-                      <FiEye className="w-4 h-4" />
+                      <FiEye className="w-3 h-3 lg:w-4 lg:h-4" />
                     </button>
                     <button
                       onClick={() => handleDeletePost(post.id)}
-                      className="p-1 text-red-600 hover:text-red-800 transition-colors"
+                      className="p-1 lg:p-2 text-red-600 hover:text-red-800 transition-colors rounded-full hover:bg-red-50"
                       title="Delete Post"
                     >
-                      <FiTrash2 className="w-4 h-4" />
+                      <FiTrash2 className="w-3 h-3 lg:w-4 lg:h-4" />
                     </button>
                   </div>
                 </div>
@@ -210,67 +210,80 @@ const PostManagement = () => {
       {/* Pagination */}
       {postsTotalPages > 1 && (
         <div className="bg-white rounded-lg shadow-sm p-4">
-          <div className="flex items-center justify-between">
-            <div className="flex-1 flex justify-between sm:hidden">
-              <button
-                onClick={() => handlePageChange(postsCurrentPage - 1)}
-                disabled={postsCurrentPage === 1}
-                className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => handlePageChange(postsCurrentPage + 1)}
-                disabled={postsCurrentPage === postsTotalPages}
-                className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-              >
-                Next
-              </button>
+          {/* Mobile Pagination */}
+          <div className="flex items-center justify-between sm:hidden">
+            <button
+              onClick={() => handlePageChange(postsCurrentPage - 1)}
+              disabled={postsCurrentPage === 1}
+              className="relative inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <span className="text-sm text-gray-700">
+              Page {postsCurrentPage} of {postsTotalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(postsCurrentPage + 1)}
+              disabled={postsCurrentPage === postsTotalPages}
+              className="relative inline-flex items-center px-3 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+          
+          {/* Desktop Pagination */}
+          <div className="hidden sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p className="text-sm text-gray-700">
+                Showing <span className="font-medium">{(postsCurrentPage - 1) * 10 + 1}</span> to{' '}
+                <span className="font-medium">
+                  {Math.min(postsCurrentPage * 10, totalPosts)}
+                </span>{' '}
+                of <span className="font-medium">{totalPosts}</span> results
+              </p>
             </div>
-            <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-              <div>
-                <p className="text-sm text-gray-700">
-                  Showing <span className="font-medium">{(postsCurrentPage - 1) * 10 + 1}</span> to{' '}
-                  <span className="font-medium">
-                    {Math.min(postsCurrentPage * 10, totalPosts)}
-                  </span>{' '}
-                  of <span className="font-medium">{totalPosts}</span> results
-                </p>
-              </div>
-              <div>
-                <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
-                  <button
-                    onClick={() => handlePageChange(postsCurrentPage - 1)}
-                    disabled={postsCurrentPage === 1}
-                    className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
-                  >
-                    <FiChevronLeft className="w-5 h-5" />
-                  </button>
-                  {[...Array(postsTotalPages)].map((_, index) => {
-                    const page = index + 1;
-                    return (
-                      <button
-                        key={page}
-                        onClick={() => handlePageChange(page)}
-                        className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
-                          postsCurrentPage === page
-                            ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
-                            : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    );
-                  })}
-                  <button
-                    onClick={() => handlePageChange(postsCurrentPage + 1)}
-                    disabled={postsCurrentPage === postsTotalPages}
-                    className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50"
-                  >
-                    <FiChevronRight className="w-5 h-5" />
-                  </button>
-                </nav>
-              </div>
+            <div>
+              <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                <button
+                  onClick={() => handlePageChange(postsCurrentPage - 1)}
+                  disabled={postsCurrentPage === 1}
+                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <FiChevronLeft className="w-5 h-5" />
+                </button>
+                {[...Array(Math.min(postsTotalPages, 5))].map((_, index) => {
+                  let page;
+                  if (postsTotalPages <= 5) {
+                    page = index + 1;
+                  } else if (postsCurrentPage <= 3) {
+                    page = index + 1;
+                  } else if (postsCurrentPage >= postsTotalPages - 2) {
+                    page = postsTotalPages - 4 + index;
+                  } else {
+                    page = postsCurrentPage - 2 + index;
+                  }
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${
+                        postsCurrentPage === page
+                          ? 'z-10 bg-blue-50 border-blue-500 text-blue-600'
+                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => handlePageChange(postsCurrentPage + 1)}
+                  disabled={postsCurrentPage === postsTotalPages}
+                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <FiChevronRight className="w-5 h-5" />
+                </button>
+              </nav>
             </div>
           </div>
         </div>
